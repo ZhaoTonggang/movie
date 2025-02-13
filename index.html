@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta name="referrer" content="no-referrer">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width,initial-scale=1.user-scalable=0">
+		<title>风影阁</title>
+		<meta name="keywords" content="风影阁">
+		<meta name="description" content="风影阁">
+		<link rel="stylesheet" type="text/css" href="./css/jquery.mobile.min.css">
+		<link rel="stylesheet" type="text/css" href="./css/common.css">
+		<!--网站图标配置-->
+		<link rel="apple-touch-icon" sizes="192x192" href="./icons/192x192.png" />
+		<link rel="shortcut icon" type="image/png" sizes="16x16" href="./icons/16x16.png" />
+		<link rel="icon" type="image/png" sizes="72x72" href="./icons/72x72.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="./icons/96x96.png" />
+		<link rel="icon" type="image/png" sizes="128x128" href="./icons/128x128.png" />
+		<link rel="icon" type="image/png" sizes="144x144" href="./icons/144x144.png" />
+		<link rel="icon" type="image/png" sizes="152x152" href="./icons/152x152.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="./icons/192x192.png" />
+		<link rel="icon" type="image/png" sizes="384x384" href="./icons/384x384.png" />
+		<link rel="icon" type="image/png" sizes="512x512" href="./icons/512x512.png" />
+		<!--PWA配置-->
+		<link rel="manifest" href="./manifest.json" />
+	</head>
+	<body class="body">
+		<div class="header">
+			<a class="logo" href="./" style="background-image:url('./images/logo.png')"></a>
+			<div class="search">
+				<a id="searchDo"></a>
+				<input type="text" placeholder="输入你想看的" id="search" />
+			</div>
+			<div class="navigate">
+				<a href="./" class="current">精选</a>
+				<a href="./list/dianshi/">电视剧</a>
+				<a href="./list/dianying/">电影</a>
+				<a href="./list/zongyi/">综艺</a>
+				<a href="./list/dongman/">动漫</a>
+			</div>
+		</div>
+		<div class="s-slider">
+			<ul id="bannerList"></ul>
+			<ol></ol>
+			<div style="display:none"><span class="now"></span><span>/</span><span class="total"></span></div>
+		</div>
+		<div class="list">
+			<h3 class="title">电视剧</h3>
+			<div class="items" id="dianshiList">
+				<div class="template" id="stList">
+					<div class="loading" id="loadBox2">
+						<span class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></span>
+					</div>
+				</div>
+			</div>
+			<div class="more">
+				<a href="./list/dianshi/"><img src="./images/more_1.png" />更多电视剧</a>
+				<a class="switch-button" data-list-type="dianshi"><img src="./images/more_2.png" />换一批</a>
+			</div>
+		</div>
+		<div class="clear" style="height:0.8rem"></div>
+		<div class="list">
+			<h3 class="title">电影</h3>
+			<div class="items" id="dianyingList">
+				<div class="template" id="stList">
+					<div class="loading" id="loadBox2">
+						<span class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></span>
+					</div>
+				</div>
+			</div>
+			<div class="more">
+				<a href="./list/dianying/"><img src="./images/more_1.png" />更多电影</a>
+				<a class="switch-button" data-list-type="dianying"><img src="./images/more_2.png" />换一批</a>
+			</div>
+		</div>
+		<div class="clear" style="height:0.8rem"></div>
+		<div class="list">
+			<h3 class="title">综艺</h3>
+			<div class="items" id="zongyiList">
+				<div class="template" id="stList">
+					<div class="loading" id="loadBox2">
+						<span class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></span>
+					</div>
+				</div>
+			</div>
+			<div class="more">
+				<a href="./list/zongyi/"><img src="./images/more_1.png" />更多综艺</a>
+				<a class="switch-button" data-list-type="zongyi"><img src="./images/more_2.png" />换一批</a>
+			</div>
+		</div>
+		<div class="clear" style="height:0.8rem"></div>
+		<div class="list">
+			<h3 class="title">动漫</h3>
+			<div class="items" id="dongmanList">
+				<div class="template" id="stList">
+					<div class="loading" id="loadBox2">
+						<span class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></span>
+					</div>
+				</div>
+			</div>
+			<div class="more">
+				<a href="./list/dongman/"><img src="./images/more_1.png" />更多动漫</a>
+				<a class="switch-button" data-list-type="dongman"><img src="./images/more_2.png" />换一批</a>
+			</div>
+		</div>
+		<div class="clear" style="height:2rem"></div>
+		<div class="copyright">
+			<p>本站内容均来自于互联网资源实时采集</p>
+			<p>本网站仅用做学习交流</p>
+		</div>
+		<a class="scroll-to-top" id="scrollToTop"></a>
+		<script src="./js/index.js"></script>
+		<!-- 谷歌自动广告 -->
+		<script async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3670070169085381"
+			crossorigin="anonymous"></script>
+		<noscript>
+			<h1>本站功能实现依赖了大量JS，您的浏览器不支持或未启用JS！</h1>
+		</noscript>
+	</body>
+</html>

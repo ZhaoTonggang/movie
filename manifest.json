@@ -1,0 +1,65 @@
+{
+	"background_color": "#ffffff",
+	"description": "风影阁为您提供最新电影、最新电视剧、最新动漫、在线观看。",
+	"dir": "auto",
+	"display": "standalone",
+	"name": "风影阁",
+	"orientation": "any",
+	"scope": "/mov",
+	"short_name": "风影阁",
+	"start_url": "/mov",
+	"theme_color": "#ffffff",
+	"manifestUrl": "./manifest.json",
+	"categories": [
+		"entertainment"
+	],
+	"screenshots": [],
+	"icons": [{
+			"src": "./icons/16×16.png",
+			"sizes": "16x16",
+			"type": "image/png"
+		}, {
+			"src": "./icons/72×72.png",
+			"sizes": "72x72",
+			"type": "image/png"
+		},
+		{
+			"src": "./icons/96×96.png",
+			"sizes": "96x96",
+			"type": "image/png"
+		},
+		{
+			"src": "./icons/128×128.png",
+			"sizes": "128x128",
+			"type": "image/png"
+		},
+		{
+			"src": "./icons/144×144.png",
+			"sizes": "144x144",
+			"type": "image/png"
+		},
+		{
+			"src": "./icons/152×152.png",
+			"sizes": "152x152",
+			"type": "image/png"
+		},
+		{
+			"src": "./icons/192×192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "./icons/384×384.png",
+			"sizes": "384x384",
+			"type": "image/png"
+		},
+		{
+			"src": "./icons/512×512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"shortcuts": [],
+	"id": "fengyingge",
+	"lang": "zh"
+}
