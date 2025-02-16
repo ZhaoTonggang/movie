@@ -2,21 +2,18 @@
 "use strict";
 // 初始页码
 let page = 1;
-const lxlist = ['全部', '言情', '剧情', '伦理', '喜剧', '悬疑', '都市', '偶像', '古装', '军事', '警匪', '历史', '励志', '神话', '谍战', '青春', '家庭',
-	'动作', '情景', '武侠', '科幻', '其他'
+const lxlist = ['全部', '热血', '科幻', '美少女', '魔幻', '经典', '励志', '少儿', '冒险', '搞笑', '推理', '恋爱', '治愈', '幻想', '校园', '动物', '机战',
+	'亲子', '儿歌', '运动', '悬疑', '怪物', '战争', '益智', '青春', '童话', '竞技', '动作', '社会', '友情', '真人版', '电影版', 'OVA版'
 ];
 const ndlist = ['全部', 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2010, 2009,
-	2008, 2007, '更早'
+	2008, 2007, 2006, 2005, 2004, '更早'
 ];
-const dqlist = ['全部', '内地', '中国香港', '中国台湾', '泰国', '日本', '韩国', '美国', '英国', '新加坡'];
-const mxlist = ['全部', '杨幂', '热巴', '张嘉译', '赵丽颖', '赵又廷', '胡歌', '孙俪', '韩东君', '周迅', '张一山', '李小璐', '李沁', '陈坤', '刘亦菲', '唐嫣',
-	'李小冉', '周冬雨', '于和伟', '李易峰', '雷佳音', '何冰', '阮经天', '梅婷', '徐峥', '祖峰', '秦海璐', '杨紫', '任嘉伦', '贾乃亮', '罗晋'
-];
+const dqlist = ['全部', '内地', '中国香港', '中国台湾', '日本', '欧美'];
 // 过滤器
 const filter = (c) => {
 	const filt = {
 		'全部': '',
-		'更早': 'lt_year',
+		'内地': '大陆',
 		'中国香港': '香港',
 		'中国台湾': '台湾'
 	};
@@ -51,13 +48,11 @@ const getlist = (a, b) => {
 getlist('lx', lxlist);
 getlist('nd', ndlist);
 getlist('dq', dqlist);
-getlist('mx', mxlist);
 const getmov = (s) => {
 	const pxv = '&rank=' + radio('paixu');
 	let lxv = filter(radio('lx')) ? '&cat=' + filter(radio('lx')) : '';
 	let ndv = filter(radio('nd')) ? '&year=' + filter(radio('nd')) : '';
 	let dqv = filter(radio('dq')) ? '&area=' + filter(radio('dq')) : '';
-	let mxv = filter(radio('mx')) ? '&act=' + filter(radio('mx')) : '';
 	let pgv = '';
 	if (s == 1) {
 		page += 1;
@@ -73,7 +68,7 @@ const getmov = (s) => {
 		document.getElementById('prev').style.display = 'none';
 	}
 	fetch('https://server.heheda.top/movie/', {
-		body: 'catid=2' + pxv + lxv + ndv + dqv + mxv + pgv,
+		body: 'catid=4' + pxv + lxv + ndv + dqv + pgv,
 		method: 'POST',
 		cache: 'force-cache',
 		headers: {
@@ -84,9 +79,9 @@ const getmov = (s) => {
 			let data = '';
 			datas = datas.data;
 			for (let i in datas) {
-				data += '<a href="../../play/?cat=2&vid=' + encodeURI(datas[i].id) +
-					'.html"><i style="background-image:url(https://' + datas[i].cdncover + ')"><b>更新至' +
-					datas[i].upinfo + '集</b></i><span>' + datas[i].title + '</span></a>';
+				data += '<a href="../../play/?cat=4&vid=' + encodeURI(datas[i].id) +
+					'.html"><i style="background-image:url(https://' + datas[i].cdncover +
+					')"><b>更新至' + datas[i].upinfo + '集</b></i><span>' + datas[i].title + '</span></a>';
 			}
 			document.getElementById('listList').innerHTML = data + '<span class="clear"></span>';
 		}

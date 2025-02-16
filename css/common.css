@@ -30,7 +30,10 @@ input::-ms-input-placeholder {
 	height: 2rem;
 	background: no-repeat center;
 	background-size: 65%;
-	z-index: 17
+	z-index: 17;
+	font-size: 50px;
+	line-height: 2rem;
+	color: #FB7299;
 }
 
 /* 搜索栏 */
@@ -109,7 +112,7 @@ input::-ms-input-placeholder {
 
 /* 轮播 */
 .s-slider {
-	width: 14.2rem;
+	width: 100%;
 	height: 7.1rem;
 	margin: 0 auto;
 	border-radius: 0.2rem
@@ -347,16 +350,11 @@ input::-ms-input-placeholder {
 
 /* 条件选择 */
 .condition {
-	width: 15rem;
 	overflow: hidden
 }
 
 .condition .s-slide-menu {
 	position: relative;
-	width: 14.6rem;
-	margin-left: 0.4rem;
-	margin-top: 0.4rem;
-	height: 1.2rem
 }
 
 .condition .s-slide-menu div {
@@ -399,4 +397,21 @@ input::-ms-input-placeholder {
 	text-align: center;
 	background: #EEE;
 	font-size: 0.5rem
+}
+
+ul,
+li {
+	width: 100% !important;
+}
+
+input[type='radio'] {
+	display: none;
+}
+
+label {
+	margin: 5px;
+}
+
+input[type='radio']:checked+label {
+	color: #FB7299
 }

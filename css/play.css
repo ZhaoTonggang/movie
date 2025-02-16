@@ -1,7 +1,7 @@
 /* 播放盒子 */
 .play-box {
 	position: relative;
-	/* width: 15rem; */
+	border-radius: 10px;
 	height: 12rem;
 	background: #000;
 	border: none;

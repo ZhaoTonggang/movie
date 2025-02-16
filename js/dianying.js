@@ -2,20 +2,21 @@
 "use strict";
 // 初始页码
 let page = 1;
-const lxlist = ['全部', '言情', '剧情', '伦理', '喜剧', '悬疑', '都市', '偶像', '古装', '军事', '警匪', '历史', '励志', '神话', '谍战', '青春', '家庭',
-	'动作', '情景', '武侠', '科幻', '其他'
+const lxlist = ['全部', '喜剧', '爱情', '动作', '恐怖', '科幻', '剧情', '犯罪', '奇幻', '战争', '悬疑', '动画', '文艺', '纪录', '传记', '歌舞', '古装',
+	'历史', '惊悚', '伦理', '其他'
 ];
 const ndlist = ['全部', 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2010, 2009,
 	2008, 2007, '更早'
 ];
-const dqlist = ['全部', '内地', '中国香港', '中国台湾', '泰国', '日本', '韩国', '美国', '英国', '新加坡'];
-const mxlist = ['全部', '杨幂', '热巴', '张嘉译', '赵丽颖', '赵又廷', '胡歌', '孙俪', '韩东君', '周迅', '张一山', '李小璐', '李沁', '陈坤', '刘亦菲', '唐嫣',
-	'李小冉', '周冬雨', '于和伟', '李易峰', '雷佳音', '何冰', '阮经天', '梅婷', '徐峥', '祖峰', '秦海璐', '杨紫', '任嘉伦', '贾乃亮', '罗晋'
+const dqlist = ['全部', '内地', '中国香港', '中国台湾', '泰国', '美国', '韩国', '日本', '法国', '英国', '德国', '印度', '其他'];
+const mxlist = ['全部', '成龙', '周星驰', '李连杰', '林正英', '吴京', '徐峥', '黄渤', '王宝强', '李小龙', '张国荣', '洪金宝', '姜文', '沈腾', '邓超', '巩俐',
+	'马丽', '闫妮', '周冬雨', '刘昊然', '汤唯', '舒淇', '白百何'
 ];
 // 过滤器
 const filter = (c) => {
 	const filt = {
 		'全部': '',
+		'内地': '大陆',
 		'更早': 'lt_year',
 		'中国香港': '香港',
 		'中国台湾': '台湾'
@@ -73,7 +74,7 @@ const getmov = (s) => {
 		document.getElementById('prev').style.display = 'none';
 	}
 	fetch('https://server.heheda.top/movie/', {
-		body: 'catid=2' + pxv + lxv + ndv + dqv + mxv + pgv,
+		body: 'catid=1' + pxv + lxv + ndv + dqv + mxv + pgv,
 		method: 'POST',
 		cache: 'force-cache',
 		headers: {
@@ -84,9 +85,10 @@ const getmov = (s) => {
 			let data = '';
 			datas = datas.data;
 			for (let i in datas) {
-				data += '<a href="../../play/?cat=2&vid=' + encodeURI(datas[i].id) +
-					'.html"><i style="background-image:url(https://' + datas[i].cdncover + ')"><b>更新至' +
-					datas[i].upinfo + '集</b></i><span>' + datas[i].title + '</span></a>';
+				data += '<a href="../../play/?cat=1&vid=' + encodeURI(datas[i].id) +
+					'.html"><i style="background-image:url(https://' + datas[i].cdncover +
+					')"><b style="color: #fff;font-size: 0.3rem;text-align: center;">' +
+					datas[i].comment + '</b></i><span>' + datas[i].title + '</span></a>';
 			}
 			document.getElementById('listList').innerHTML = data + '<span class="clear"></span>';
 		}
