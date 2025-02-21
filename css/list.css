@@ -23,3 +23,10 @@ input[type='radio']:checked+label {
 	font-size: 0.4rem;
 	position: relative;
 }
+
+@media screen and (orientation: portrait) {
+	.condition .s-slide-menu {
+		font-size: 0.7rem;
+		line-height: 1rem
+	}
+}
