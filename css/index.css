@@ -1,0 +1,107 @@
+/* 轮播 */
+#lunbo,
+#item,
+.item {
+	width: 100%;
+	height: 7.1rem;
+}
+
+#lunbo {
+	position: relative;
+	margin-top: 1.8rem;
+	border-radius: 0.1rem;
+	overflow: hidden
+}
+
+.item {
+	position: absolute;
+	opacity: 0;
+	transition: all 1s;
+}
+
+.item.active {
+	opacity: 1;
+	z-index: 9;
+}
+
+#item li a,
+#item li img,
+#item li i {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-position: center;
+	background-size: cover;
+}
+
+#item li span {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 2rem;
+	line-height: 2.5rem;
+	text-indent: 0.5rem;
+	bottom: 0rem;
+	left: 0rem;
+	color: #FFF;
+	background: linear-gradient(0, rgba(0, 0, 0, 0.4) 0, rgba(17, 85, 99, 0) 100%);
+	font-size: 0.6rem;
+	font-weight: bold
+}
+
+#btn-left,
+#btn-right {
+	width: 0.5rem;
+	height: 1.5rem;
+	font-size: 0.5rem;
+	color: white;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	line-height: 1.5rem;
+	padding: 0 0.1rem;
+	z-index: 10;
+	position: absolute;
+	top: 50%;
+	cursor: pointer;
+	opacity: 0;
+	transform: translateY(-60%);
+}
+
+#btn-left {
+	border-radius: 0 0.1rem 0.1rem 0;
+	left: 0;
+}
+
+#btn-right {
+	right: 0;
+	border-radius: 0.1rem 0 0 0.1rem;
+}
+
+#lunbo:hover #btn-left,
+#lunbo:hover #btn-right {
+	/*鼠标滑入，显示图标*/
+	opacity: 1;
+	z-index: 99;
+}
+
+#circle {
+	display: flex;
+	position: absolute;
+	bottom: 0.3rem;
+	right: 0.3rem;
+}
+
+.circle {
+	width: 0.2rem;
+	height: 0.2rem;
+	border-radius: 0.1rem;
+	border: 0.05rem solid white;
+	background: rgba(0, 0, 0, 0.4);
+	cursor: pointer;
+	margin: 0.1rem;
+	z-index: 99;
+}
+
+.white {
+	background-color: #FFFFFF;
+}

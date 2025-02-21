@@ -1,0 +1,25 @@
+/* 条件选择 */
+input[type='radio'] {
+	display: none;
+}
+
+label {
+	margin: 5px;
+	cursor: pointer;
+}
+
+input[type='radio']:checked+label {
+	color: #FB7299
+}
+
+.condition {
+	margin-top: 1.8rem;
+	margin-bottom: 0.5rem;
+	line-height: 0.7rem;
+	overflow: hidden
+}
+
+.condition .s-slide-menu {
+	font-size: 0.4rem;
+	position: relative;
+}

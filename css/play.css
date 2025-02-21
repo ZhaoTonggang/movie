@@ -1,0 +1,196 @@
+.play-box {
+	position: relative;
+	border-radius: 10px;
+	height: 12rem;
+	background: #000;
+	border: none;
+	overflow: hidden;
+	margin: 0.3rem 0;
+}
+
+.play-box iframe {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border: none;
+	z-index: 0
+}
+
+.play-box .tip {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 3rem;
+	line-height: 3rem;
+	text-align: center;
+	background: #000;
+	z-index: 99;
+	color: rgba(255, 255, 255, 0.85);
+	display: none
+}
+
+.play-box .tip a {
+	color: #FB7299
+}
+
+.play-box .tip i {
+	display: block;
+	position: absolute;
+	width: 1.6rem;
+	height: 1.6rem;
+	background: url(../images/tip_close.png) no-repeat center;
+	top: 0;
+	right: 0;
+	background-size: 0.7rem 0.7rem;
+	opacity: 0.85
+}
+
+#play {
+	width: 100%;
+	height: 100%;
+	border: none;
+	overflow: hidden;
+	background: #000
+}
+
+/* 来源 */
+.from-title {
+	font-size: 0.66rem;
+	overflow: hidden;
+	margin: 1.8rem 0 0.3rem 0;
+	text-align: center;
+}
+
+.from-title span {
+	padding-left: 0.3rem;
+	font-size: 0.55rem;
+	color: #AAA;
+	font-weight: normal
+}
+
+input[type='radio'] {
+	display: none;
+}
+
+label,
+.episodes a {
+	height: 1.5rem;
+	line-height: 1.5rem;
+	text-align: center;
+	border-radius: 0.1rem;
+	border: 1px solid #CCC;
+	color: #333;
+	font-size: 0.5rem;
+	margin: 0.3rem;
+}
+
+label {
+	padding: 0 0.5rem
+}
+
+input[type='radio']:checked+label,
+.episodes a.current {
+	border: 1px solid #FB7299;
+	color: #FB7299
+}
+
+/* 选集 */
+.template,
+.eptemp {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: space-around;
+	align-items: stretch;
+}
+
+.template {
+	justify-content: flex-start;
+}
+
+.eptemp {
+	justify-content: space-around;
+}
+
+.episodes-title {
+	position: relative;
+	color: #333;
+	font-weight: bold;
+	border-left: 0.3rem solid #FB7299;
+	margin: 0.5rem 0;
+	padding-left: 0.5rem;
+}
+
+.episodes {}
+
+.episodes a {
+	min-width: 2.08rem
+}
+
+.episodes .episodes-title .episodes-control {
+	position: absolute;
+	right: 0.2rem;
+	top: -0.1rem
+}
+
+.episodes .episodes-title .episodes-control a {
+	width: 2.5rem;
+	height: 1.6rem;
+	line-height: 1.65rem;
+	text-align: center;
+	font-weight: normal;
+	text-indent: 0;
+	display: none
+}
+
+/* 综艺选集 */
+.episodes .episodes-list.float-none a {
+	float: none;
+	margin-right: 0.5rem;
+	height: auto;
+	min-height: 0.7rem;
+	line-height: 0.7rem;
+	padding: 0.6rem 0.5rem
+}
+
+/* 更多信息 */
+#itemList {
+	margin: 0.3rem 0;
+}
+
+.more {
+	position: relative;
+	min-height: 6.3rem
+}
+
+.more i {
+	display: block;
+	position: absolute;
+	width: 4.6rem;
+	height: 6.2rem;
+	border-radius: 5px;
+	background-size: 4.6rem 6.2rem
+}
+
+.more h2,
+.more span,
+.more div {
+	display: block;
+	margin-left: 5rem;
+	line-height: 1rem;
+	font-size: 0.5rem;
+}
+
+.more h2 {
+	font-size: 0.7rem;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+}
+
+.more div {
+	margin-left: 0
+}
+
+.more.desc {
+	min-height: 0
+}

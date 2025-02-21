@@ -9,8 +9,7 @@
 		<title>风影阁</title>
 		<meta name="keywords" content="风影阁">
 		<meta name="description" content="风影阁">
-		<link rel="stylesheet" type="text/css" href="../css/jquery.mobile.min.css">
-		<link rel="stylesheet" type="text/css" href="../css/common.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
 		<link rel="stylesheet" type="text/css" href="../css/play.css">
 		<!--网站图标配置-->
 		<link rel="apple-touch-icon" sizes="192x192" href="../icons/192x192.png" />
@@ -26,94 +25,89 @@
 		<!--PWA配置-->
 		<link rel="manifest" href="../manifest.json" />
 	</head>
-	<body class="body">
-		<div class="header one">
+	<body>
+		<div class="header">
 			<a class="logo">
 				<h1>风影阁</h1>
 			</a>
+			<div class="navigate">
+				<a href="../">精选</a>
+				<a href="../list/dianshi/">电视剧</a>
+				<a href="../list/dianying/">电影</a>
+				<a href="../list/zongyi/">综艺</a>
+				<a href="../list/dongman/">动漫</a>
+			</div>
 			<div class="search">
 				<a id="searchDo" onclick="so()"></a>
 				<input type="text" placeholder="输入你想看的" id="search" />
 			</div>
 		</div>
-		<div id="playBox">
-			<div class="play-box" id="playBoxIframe">
-				<iframe allow="fullscreen;autoplay" sandbox="allow-scripts allow-same-origin"
-					style="width:100%;height:100%;border:none;overflow:hidden;background:#000" id="play"
-					src="../ads/"></iframe>
-				<div class="tip">如无法播放请尝试切换线路，或<a>点击前往<span></span>播放</a><i class="close"></i></div>
+		<h1 class="from-title" id="titleItem"><b>正在放映:</b></h1>
+		<div class="play-box" id="playBoxIframe">
+			<iframe allow="fullscreen;autoplay" sandbox="allow-scripts allow-same-origin" id="play"
+				src="../ads/"></iframe>
+			<div class="tip">如无法播放请尝试切换线路，或<a>点击前往<span></span>播放</a><i class="close"></i></div>
+		</div>
+		<div id='playinfo'>
+			<div style="text-align: center;">
+				<p style="color:#ff0000;">温馨提示：不能播放请尝试更换视频平台或解析线路！</p>
 			</div>
-			<div id='playinfo'>
-				<div style="text-align: center;">
-					<span style="color:#ff0000;">温馨提示：不能播放请更换播放列表或者切换线路！</span>
-					<br />
-					<span style="color:#1d953f">如果还是不行,请点击下方☞
-						<a href="" style="color:#ff0000" target="playBox">《这里》搜索</a>
-					</span>
+		</div>
+		<div class="from" id="siteList">
+			<h2 class="title">视频平台</h2>
+			<div class="template" id="stList">
+				<div class="loading" id="loadBox2">
+					<span class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></span>
 				</div>
 			</div>
-			<div class="clear" style="height:0.3rem"></div>
-			<h3 class="from-title" id="titleItem"></h3>
-			<div class="from" id="siteList">
-				<div class="template" id="stList">
-					<div class="loading" id="loadBox2">
-						<span class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></span>
-					</div>
-				</div>
-				<span class="clear"></span>
-			</div>
-			<h3 class="from-title">切换线路</h3>
-			<div class="from" id="fromList" from="">
-				<div class="template" id="jxList">
-					<div class="loading" id="loadBox2">
-						<span class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></span>
-					</div>
-				</div>
-				<span class="clear"></span>
-			</div>
-			<div class="episodes" id="episodesBox">
-				<div class="clear" style="height:0.3rem"></div>
-				<h3 class="episodes-title">选集<span class="episodes-control" id="episodesControl"><a
-							class="prev">上一集</a><a class="next">下一集</a></span></h3>
-				<div class="episodes-list">
-					<div class="template" id="episodesList">
-						<!-- <a data-api="{{api}}" data-part="{{part}}" data-href="{{href}}"
-							value="{{number}}">{{number}}</a> -->
-					</div>
-					<span class="clear"></span>
+		</div>
+		<div class="from" id="fromList">
+			<h2 class="title">播放线路</h2>
+			<div class="template" id="jxList">
+				<div class="loading" id="loadBox2">
+					<span class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></span>
 				</div>
 			</div>
-
+		</div>
+		<div class="episodes" id="episodesBox">
+			<h2 class="episodes-title">剧集列表
+				<span class="episodes-control" id="episodesControl">
+					<a class="prev">上一集</a><a class="next">下一集</a>
+				</span>
+			</h2>
+			<div class="episodes-list">
+				<div class="eptemp" id="episodesList"></div>
+			</div>
 		</div>
 		<!-- <div class="no-data" id="noDataBox">未找到可用播放线路</div> -->
-		<div class="clear" style="height:2rem"></div>
 		<div id="itemList">
+			<h2 class="title">视频详情</h2>
 			<div class="more">
 				<i id="morei"></i>
-				<h5 id="moreh5"></h5>
-				<span id="span1">地区：</span>
-				<span id="span2">导演：</span>
-				<span id="span3">演员：</span>
+				<h2 id="moreh5"></h2>
+				<span id="span1"><b>地区：</b></span>
+				<span id="span2"><b>导演：</b></span>
+				<span id="span3"><b>演员：</b></span>
 			</div>
 			<div class="more desc">
-				<div id='mddiv'>简介：</div>
+				<div id='mddiv'><b>简介：</b></div>
 			</div>
 		</div>
 		<div class="list">
-			<h3 class="title">猜你喜欢</h3>
+			<h2 class="title">猜你喜欢</h2>
 			<div class="items" id="guessList">
 				<div class="loading" id="loadBox2">
 					<span class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></span>
 				</div>
 			</div>
 		</div>
-		<div class="clear" style="height:2rem"></div>
 		<div class="copyright">
 			<p>本站内容均来自于互联网资源实时采集</p>
 			<p>本网站仅用做学习交流</p>
 		</div>
-		<a class="scroll-to-top" id="scrollToTop"></a>
-		<script src="../js/play.js"></script>
+		<a id="scrollToTop" onclick="cdTop()"></a>
+		<script defer src="../js/fetch.js"></script>
+		<script defer src="../js/play.js"></script>
 		<!-- 谷歌自动广告 -->
 		<script async
 			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3670070169085381"

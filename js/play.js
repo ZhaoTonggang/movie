@@ -9,7 +9,7 @@ const arr = (e, y) => {
 		return e[0];
 	}
 	let arre = '';
-	for (let i in e) {
+	for (let i = 0, len = e.length; i < len; i++) {
 		arre += e[i] + '\t';
 	}
 	return arre;
@@ -31,16 +31,9 @@ const juji = async (c, a, t, s) => {
 	}
 	for (let i = 1; i <= t; i++) {
 		end = end * i;
-		await fetch('https://server.heheda.top/movie/', {
-			body: 'cat=' + c + '&id=' + a + '&start=' + start + '&end=' + end + '&site=' + s,
-			method: 'POST',
-			cache: 'force-cache',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			}
-		}).then(response => response.json()).then(datas => {
+		await post('cat=' + c + '&id=' + a + '&start=' + start + '&end=' + end + '&site=' + s).then(datas => {
 			datas = datas.data.allepidetail[s];
-			for (let d in datas) {
+			for (let d = 0, len = datas.length; d < len; d++) {
 				jjdata += '<input type="radio" name="sjj" value="' + datas[d].url + '"id="jj' + d +
 					'" onclick="getlist()"/><label for="jj' + d + '">第' + datas[d].playlink_num +
 					'集</label>';
@@ -52,23 +45,16 @@ const juji = async (c, a, t, s) => {
 }
 // 猜你喜欢
 const guess = (c, a) => {
-	fetch('https://server.heheda.top/movie/', {
-		body: 'cat=' + c + '&act=' + a,
-		method: 'POST',
-		cache: 'force-cache',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded'
-		}
-	}).then(response => response.json()).then(datas => {
+	post('cat=' + c + '&act=' + a).then(datas => {
 		if (datas.code == 1) {
 			let bdata = '';
 			datas = datas.data.movies;
-			for (let i in datas) {
+			for (let i = 0, len = datas.length; i < len; i++) {
 				bdata += '<a target="_blank" href="./?cat=' + c + '&vid=' + encodeURI(datas[i].id) +
 					'.html"><i style="background-image:url(' + datas[i].cdncover + '"></i><span>' + datas[i]
 					.title + '</span></a>';
 			}
-			document.getElementById('guessList').innerHTML = bdata + '<span class="clear"></span>';
+			document.getElementById('guessList').innerHTML = bdata;
 		} else {
 			alert('网络错误！');
 		}
@@ -77,7 +63,7 @@ const guess = (c, a) => {
 // value值遍历器
 const getvl = (a) => {
 	const avl = document.getElementsByName(a);
-	for (let i in avl) {
+	for (let i = 0, len = avl.length; i < len; i++) {
 		if (avl[i].checked) {
 			return avl[i].value;
 		}
@@ -95,7 +81,7 @@ if (window.top != window) {
 } else if (urldata.indexOf('?') > -1 && urldata.indexOf('.html') > -1) {
 	const urlarr = urldata.substring(urldata.indexOf('?') + 1, urldata.indexOf('.html'));
 	const urlarrs = urlarr.split('&');
-	for (let i = 0; i < urlarrs.length; i++) {
+	for (let i = 0, len = urlarrs.length; i < len; i++) {
 		let data = urlarrs[i].split('=');
 		if (data == "") {
 			alert('网络错误！');
@@ -104,16 +90,8 @@ if (window.top != window) {
 		}
 	}
 	// 获取详细信息
-	fetch('https://server.heheda.top/movie/', {
-		body: 'cat=' + dataInfo.cat + '&id=' + dataInfo.vid,
-		method: 'POST',
-		cache: 'force-cache',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded'
-		}
-	}).then(response => response.json()).then(datas => {
+	post('cat=' + dataInfo.cat + '&id=' + dataInfo.vid).then(datas => {
 		if (datas.code == 1) {
-			const titleItem = document.getElementById('titleItem');
 			const jiexi = ['aHR0cHM6Ly9qeC54bWZsdi5jb20vP3VybD0=', 'aHR0cHM6Ly9qeC5wbGF5ZXJqeS5jb20vP3VybD0=',
 				'aHR0cHM6Ly9kbWp4Lm0zdTgudHYvP3VybD0=', 'aHR0cHM6Ly9qeC5tM3U4LnR2L2ppZXhpLz91cmw9',
 				'aHR0cHM6Ly9qeC5haWRvdWVyLm5ldC8/dXJsPQ=='
@@ -121,13 +99,14 @@ if (window.top != window) {
 			let jxvalue = '';
 			let stvalue = '';
 			datas = datas.data;
-			titleItem.innerText = datas.title;
+			document.title = '正在放映:《' + datas.title + '》- 风影阁';
+			document.getElementById('titleItem').innerHTML += '《' + datas.title + '》';
 			document.getElementById('morei').style.backgroundImage = 'url(' + datas.cdncover + ')';
-			document.getElementById('moreh5').innerText = datas.title;
-			document.getElementById('mddiv').innerText += datas.description;
-			document.getElementById('span1').innerText += arr(datas.area);
-			document.getElementById('span2').innerText += arr(datas.moviecategory);
-			document.getElementById('span3').innerText += arr(datas.actor);
+			document.getElementById('moreh5').innerHTML = datas.title;
+			document.getElementById('mddiv').innerHTML += datas.description;
+			document.getElementById('span1').innerHTML += arr(datas.area);
+			document.getElementById('span2').innerHTML += arr(datas.moviecategory);
+			document.getElementById('span3').innerHTML += arr(datas.actor);
 			guess(dataInfo.cat, arr(datas.actor, 'y'));
 			// 获取平台
 			const siteList = {
@@ -162,7 +141,7 @@ if (window.top != window) {
 			}
 			document.getElementById('stList').innerHTML = stvalue;
 			// 解析线路
-			for (let a in jiexi) {
+			for (let a = 0, len = jiexi.length; a < len; a++) {
 				let cjch = (a == Object.keys(jiexi)[0]) ? 'checked' : '';
 				jxvalue += '<input ' + cjch + ' type="radio" name="sjx" value="' + jiexi[a] + '"id="' + a +
 					'" onclick="getlist()"/><label for="' + a + '">线路' + a + '</label>';

@@ -17,16 +17,12 @@ const filter = (c) => {
 		'中国香港': '香港',
 		'中国台湾': '台湾'
 	};
-	if (c in filt) {
-		return filt[c];
-	} else {
-		return c;
-	}
+	return (c in filt) ? filt[c] : c;
 }
 // radio遍历器
 const radio = (r) => {
 	const all = document.getElementsByName(r);
-	for (let i in all) {
+	for (let i = 0, len = all.length; i < len; i++) {
 		if (all[i].checked) {
 			return all[i].value;
 		}
@@ -34,14 +30,11 @@ const radio = (r) => {
 }
 const getlist = (a, b) => {
 	let content = '';
-	for (let i in b) {
-		if (i == 0) {
-			content += '<input checked type="radio" name="' + a + '" value="" id="' + a + i +
-				'" onclick="getmov()" /><label for="' + a + i + '">' + b[i] + '</label>';
-		} else {
-			content += '<input type="radio" name="' + a + '" value="' + b[i] + '" id="' + a + i +
-				'" onclick="getmov()" /><label for="' + a + i + '">' + b[i] + '</label>';
-		}
+	for (let i = 0, len = b.length; i < len; i++) {
+		let chk = (i == 0) ? 'checked' : '';
+		let val = (i == 0) ? '' : b[i];
+		content += '<input ' + chk + ' type="radio" name="' + a + '" value="' + val + '" id="' + a + i +
+			'" onclick="getmov()" /><label for="' + a + i + '">' + b[i] + '</label>';
 	}
 	document.getElementById(a).innerHTML += content;
 }
@@ -67,23 +60,18 @@ const getmov = (s) => {
 		pgv = '';
 		document.getElementById('prev').style.display = 'none';
 	}
-	fetch('https://server.heheda.top/movie/', {
-		body: 'catid=4' + pxv + lxv + ndv + dqv + pgv,
-		method: 'POST',
-		cache: 'force-cache',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded'
-		}
-	}).then(response => response.json()).then(datas => {
+	post('catid=4' + pxv + lxv + ndv + dqv + pgv).then(datas => {
 		if (datas.code == 1) {
 			let data = '';
 			datas = datas.data;
-			for (let i in datas) {
+			for (let i = 0, len = datas.length; i < len; i++) {
 				data += '<a href="../../play/?cat=4&vid=' + encodeURI(datas[i].id) +
 					'.html"><i style="background-image:url(https://' + datas[i].cdncover +
 					')"><b>更新至' + datas[i].upinfo + '集</b></i><span>' + datas[i].title + '</span></a>';
 			}
-			document.getElementById('listList').innerHTML = data + '<span class="clear"></span>';
+			document.getElementById('listList').innerHTML = data;
+		} else {
+			alert('网络错误！');
 		}
 	}).catch(e => console.error('[404]错误日志：', e))
 }

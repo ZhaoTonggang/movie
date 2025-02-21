@@ -1,0 +1,20 @@
+/* 关键词提示 */
+span {
+	overflow: hiddden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.keywords {
+	margin: 1.8rem 0 0.3rem 0;
+	font-size: 0.65rem;
+}
+
+/* 无数据 */
+.no-data {
+	height: 2rem;
+	line-height: 2rem;
+	text-align: center;
+	background: #EEE;
+	font-size: 0.5rem
+}
