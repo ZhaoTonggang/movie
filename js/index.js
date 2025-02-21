@@ -48,7 +48,7 @@ post().then(datas => {
 		//开始定时器，点击右边按钮，实现轮播
 		timer = setInterval(() => {
 			rightBtn.onclick();
-		}, 2000)
+		}, 3000)
 		//点击圆点时，跳转到对应图片
 		for (let i = 0; i < len; i++) {
 			circles[i].onclick = function() {
@@ -65,7 +65,7 @@ post().then(datas => {
 			clearInterval(timer);
 			timer = setInterval(() => {
 				rightBtn.onclick();
-			}, 2000)
+			}, 3000)
 		}
 		//初始化轮播图，使页面加载完成后立即显示第一张图片和对应的圆点状态
 		move(index);

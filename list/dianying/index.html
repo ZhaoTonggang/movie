@@ -13,9 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/style.css">
 		<link rel="stylesheet" type="text/css" href="../../css/list.css">
 	</head>
-
 	<body>
-
 		<div class="header">
 			<a class="logo" href="../../">
 				<h1>风影阁</h1>
@@ -32,9 +30,6 @@
 				<input type="text" placeholder="输入你想看的" id="search" />
 			</div>
 		</div>
-
-		<div class="clear" style="height:0.2rem"></div>
-
 		<div class="condition" id="conditionBox">
 			<div class="s-slide-menu" id="px">
 				<b>排序：</b><input checked onclick="getmov()" type="radio" name="paixu" value="rankhot" id="px0" /><label
@@ -49,7 +44,6 @@
 			<div class="s-slide-menu" id="dq"><b>地区：</b></div>
 			<div class="s-slide-menu" id="mx"><b>明星：</b></div>
 		</div>
-
 		<div class="list">
 			<div class="no-data" id="noDataBox" style="display: none;margin-top:1rem;background:none">没有找到相关影片，请尝试其他分类！
 			</div>
@@ -63,14 +57,10 @@
 				<a class="next" onclick="getmov(1)">下一页<img src="../../images/more.png" alt="下一页" /></a>
 			</div>
 		</div>
-
-		<div class="clear" style="height:2rem"></div>
-
 		<div class="copyright">
 			<p>本站内容均来自于互联网资源实时采集</p>
 			<p>本网站仅用做学习交流</p>
 		</div>
-
 		<a id="scrollToTop" onclick="cdTop()"></a>
 		<script defer src="../../js/fetch.js"></script>
 		<script defer src="../../js/dianying.js"></script>
