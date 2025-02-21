@@ -194,3 +194,9 @@ input[type='radio']:checked+label,
 .more.desc {
 	min-height: 0
 }
+
+@media screen and (orientation: portrait) {
+	.play-box {
+		height: 10rem;
+	}
+}
