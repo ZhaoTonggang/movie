@@ -2,56 +2,46 @@
 	position: relative;
 	border-radius: 10px;
 	height: 12rem;
-	background: #000;
+	background: currentColor url('../images/new.gif') no-repeat center;
 	border: none;
 	overflow: hidden;
 	margin: 0.3rem 0;
 }
 
-.play-box iframe {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	border: none;
-	z-index: 0
-}
-
-.play-box .tip {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	height: 3rem;
-	line-height: 3rem;
-	text-align: center;
-	background: #000;
-	z-index: 99;
-	color: rgba(255, 255, 255, 0.85);
-	display: none
-}
-
-.play-box .tip a {
-	color: #FB7299
-}
-
-.play-box .tip i {
-	display: block;
-	position: absolute;
-	width: 1.6rem;
-	height: 1.6rem;
-	background: url(../images/tip_close.png) no-repeat center;
-	top: 0;
-	right: 0;
-	background-size: 0.7rem 0.7rem;
-	opacity: 0.85
-}
-
 #play {
+	position: relative;
+	z-index: 0;
 	width: 100%;
 	height: 100%;
 	border: none;
 	overflow: hidden;
-	background: #000
+}
+
+.play-box #tip {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	background: #000;
+	z-index: 99;
+}
+
+.play-box #tip p {
+	color: #FFF;
+	margin: 0.3rem;
+}
+
+.play-box #tip i {
+	display: block;
+	position: absolute;
+	width: 1.6rem;
+	height: 1.6rem;
+	background: url('../images/tip_close.png') no-repeat center;
+	top: 0;
+	right: 0;
+	background-size: 0.7rem 0.7rem;
+	cursor: pointer;
 }
 
 /* 来源 */

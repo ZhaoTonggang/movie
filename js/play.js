@@ -198,3 +198,7 @@ window.onkeydown = () => {
 		so();
 	}
 }
+// 关闭声明
+const endtip = () => {
+	document.getElementById('tip').style.display = 'none';
+}
