@@ -30,9 +30,9 @@ const juji = async (c, a, t, s) => {
 			if (datas.code == 1) {
 				datas = datas.data.allepidetail[s];
 				for (let d = 0, len = datas.length; d < len; d++) {
-					jjdata += '<input type="radio" name="sjj" value="' + datas[d].url + '"id="jj' + d +
-						'" onclick="getlist()"/><label for="jj' + d + '">第' + datas[d].playlink_num +
-						'集</label>';
+					jjdata += '<input type="radio" name="sjj" value="' + datas[d].url + '"id="' + i +
+						'-' + d + '" onclick="getlist()"/><label for="' + i + '-' + d + '">第' +
+						datas[d].playlink_num + '集</label>';
 				}
 			} else {
 				jjdata = '<div class="no-data">无法获取剧集列表，请尝试切换平台</div>';
@@ -51,9 +51,9 @@ const zyjuji = async (c, a, n, s) => {
 			if (datas.code == 1) {
 				datas = datas.data.defaultepisode;
 				for (let i = 0, len = datas.length; i < len; i++) {
-					zydata += '<input type="radio" name="sjj" value="' + datas[i].url + '"id="jj' + i +
-						'" onclick="getlist()"/><label for="jj' + i + '">' + datas[i].period +
-						'</label>';
+					zydata += '<input type="radio" name="sjj" value="' + datas[i].url + '"id="' + j +
+						'-' + i + '" onclick="getlist()"/><label for="' + j + '-' + i + '">' + datas[i]
+						.period + '</label>';
 				}
 			} else {
 				zydata = '<div class="no-data">无法获取剧集列表，请尝试切换平台</div>';
@@ -142,7 +142,8 @@ if (window.top != window) {
 				'cntv': '央视TV',
 				'huashu': '华数',
 				'm1905': 'M1905',
-				'huanxi': '欢喜首映'
+				'huanxi': '欢喜首映',
+				'pptv': 'PP视频'
 			}
 			let playurl = datas.playlinksdetail;
 			let upinfo = datas.allupinfo;
@@ -150,7 +151,7 @@ if (window.top != window) {
 			let t;
 			for (let p in playurl) {
 				t = Object.keys(playurl)[0];
-				let b = (p in siteList) ? siteList[p] : b;
+				let b = (p in siteList) ? siteList[p] : p;
 				let plch = (p == t) ? 'checked' : '';
 				// 判断视频类型
 				let plvl = (dataInfo.cat != 1) ? p : playurl[p].default_url;
