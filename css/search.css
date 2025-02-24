@@ -12,9 +12,10 @@ span {
 
 /* 无数据 */
 .no-data {
-	height: 2rem;
-	line-height: 2rem;
+	width: 100%;
+	color: red;
 	text-align: center;
-	background: #EEE;
-	font-size: 0.5rem
+	font-size: 0.5rem;
+	font-weight: bold;
+	margin: 0.5rem 0;
 }

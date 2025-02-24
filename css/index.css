@@ -63,8 +63,8 @@
 	position: absolute;
 	top: 50%;
 	cursor: pointer;
-	opacity: 0;
 	transform: translateY(-60%);
+	display: none;
 }
 
 #btn-left {
@@ -80,7 +80,7 @@
 #lunbo:hover #btn-left,
 #lunbo:hover #btn-right {
 	/*鼠标滑入，显示图标*/
-	opacity: 1;
+	display: block;
 	z-index: 99;
 }
 

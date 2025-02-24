@@ -83,6 +83,7 @@ label,
 	color: #333;
 	font-size: 0.5rem;
 	margin: 0.3rem;
+	cursor: pointer;
 }
 
 label {
@@ -121,7 +122,9 @@ input[type='radio']:checked+label,
 	padding-left: 0.5rem;
 }
 
-.episodes {}
+.episodes {
+	display: none;
+}
 
 .episodes a {
 	min-width: 2.08rem
@@ -193,6 +196,14 @@ input[type='radio']:checked+label,
 
 .more.desc {
 	min-height: 0
+}
+
+/* 无数据 */
+.no-data {
+	color: red;
+	text-align: center;
+	font-size: 0.5rem;
+	font-weight: bold;
 }
 
 @media screen and (orientation: portrait) {

@@ -17,31 +17,50 @@ const arr = (e, y) => {
 // 剧集
 const juji = async (c, a, t, s) => {
 	let start = 1;
-	let end = t;
 	let jjdata = '';
-	if (t && t != 0) {
-		if (t > 100) {
-			end = 100;
-			t = Math.ceil(t / 100)
-		} else {
-			t = 1;
-		}
+	let ts = 1;
+	if (t && t > 0) {
+		ts = t > 200 ? Math.ceil(t / 200) : 1
 	} else {
-		alert('获取剧集失败！');
+		return alert('获取剧集失败！');
 	}
-	for (let i = 1; i <= t; i++) {
-		end = end * i;
+	for (let i = 1; i <= ts; i++) {
+		let end = t < 200 * i ? t : 200 * i;
 		await post('cat=' + c + '&id=' + a + '&start=' + start + '&end=' + end + '&site=' + s).then(datas => {
-			datas = datas.data.allepidetail[s];
-			for (let d = 0, len = datas.length; d < len; d++) {
-				jjdata += '<input type="radio" name="sjj" value="' + datas[d].url + '"id="jj' + d +
-					'" onclick="getlist()"/><label for="jj' + d + '">第' + datas[d].playlink_num +
-					'集</label>';
+			if (datas.code == 1) {
+				datas = datas.data.allepidetail[s];
+				for (let d = 0, len = datas.length; d < len; d++) {
+					jjdata += '<input type="radio" name="sjj" value="' + datas[d].url + '"id="jj' + d +
+						'" onclick="getlist()"/><label for="jj' + d + '">第' + datas[d].playlink_num +
+						'集</label>';
+				}
+			} else {
+				jjdata = '<div class="no-data">无法获取剧集列表，请尝试切换平台</div>';
 			}
 		}).catch(e => console.error('[404]错误日志：', e));
-		start = end;
+		start = end + 1;
 	}
 	document.getElementById('episodesList').innerHTML = jjdata;
+}
+// 综艺类剧集
+const zyjuji = async (c, a, n, s) => {
+	let zydata = '';
+	n = Object.keys(n);
+	for (let j = 0, len = n.length; j < len; j++) {
+		await post('cat=' + c + '&id=' + a + '&year=' + n[j] + '&site=' + s).then(datas => {
+			if (datas.code == 1) {
+				datas = datas.data.defaultepisode;
+				for (let i = 0, len = datas.length; i < len; i++) {
+					zydata += '<input type="radio" name="sjj" value="' + datas[i].url + '"id="jj' + i +
+						'" onclick="getlist()"/><label for="jj' + i + '">' + datas[i].period +
+						'</label>';
+				}
+			} else {
+				zydata = '<div class="no-data">无法获取剧集列表，请尝试切换平台</div>';
+			}
+		}).catch(e => console.error('[404]错误日志：', e));
+	}
+	document.getElementById('episodesList').innerHTML = zydata;
 }
 // 猜你喜欢
 const guess = (c, a) => {
@@ -50,7 +69,7 @@ const guess = (c, a) => {
 			let bdata = '';
 			datas = datas.data.movies;
 			for (let i = 0, len = datas.length; i < len; i++) {
-				bdata += '<a target="_blank" href="./?cat=' + c + '&vid=' + encodeURI(datas[i].id) +
+				bdata += '<a href="./?cat=' + c + '&vid=' + encodeURI(datas[i].id) +
 					'.html"><i style="background-image:url(' + datas[i].cdncover + '"></i><span>' + datas[i]
 					.title + '</span></a>';
 			}
@@ -106,7 +125,8 @@ if (window.top != window) {
 			document.getElementById('mddiv').innerHTML += datas.description;
 			document.getElementById('span1').innerHTML += arr(datas.area);
 			document.getElementById('span2').innerHTML += arr(datas.moviecategory);
-			document.getElementById('span3').innerHTML += arr(datas.actor);
+			document.getElementById('span3').innerHTML += arr(datas.director);
+			document.getElementById('span4').innerHTML += arr(datas.actor);
 			guess(dataInfo.cat, arr(datas.actor, 'y'));
 			// 获取平台
 			const siteList = {
@@ -126,16 +146,17 @@ if (window.top != window) {
 			}
 			let playurl = datas.playlinksdetail;
 			let upinfo = datas.allupinfo;
-			let pst;
+			let years = datas.tag;
+			let t;
 			for (let p in playurl) {
-				pst = p;
+				t = Object.keys(playurl)[0];
 				let b = (p in siteList) ? siteList[p] : b;
-				let plch = (p == Object.keys(playurl)[0]) ? 'checked' : '';
-				// 判断是否为影片
+				let plch = (p == t) ? 'checked' : '';
+				// 判断视频类型
 				let plvl = (dataInfo.cat != 1) ? p : playurl[p].default_url;
-				let clk = (dataInfo.cat != 1) ? 'juji(' + dataInfo.cat + ',\'' + dataInfo.vid + '\',' + upinfo[
-						p] +
-					',\'' + p + '\')' : 'getlist()';
+				let clk = (dataInfo.cat == 1) ? 'getlist()' : (dataInfo.cat == 3) ? 'zyjuji(' + dataInfo.cat +
+					',\'' + dataInfo.vid + '\',' + years + ',\'' + p + '\')' : 'juji(' + dataInfo.cat + ',\'' +
+					dataInfo.vid + '\',' + upinfo[p] + ',\'' + p + '\')';
 				stvalue += '<input ' + plch + ' type="radio" name="sti" value="' + plvl + '"id="' + p +
 					'" onclick="' + clk + '"/><label for="' + p + '">' + b + '</label>';
 			}
@@ -148,8 +169,13 @@ if (window.top != window) {
 			}
 			document.getElementById('jxList').innerHTML = jxvalue;
 			// 自动解析剧集
-			if (dataInfo.cat != 1) {
-				juji(dataInfo.cat, dataInfo.vid, upinfo[pst], pst);
+			if (dataInfo.cat == 2 || dataInfo.cat == 4) {
+				document.getElementById('episodesBox').style.display = 'block';
+				juji(dataInfo.cat, dataInfo.vid, upinfo[t], t);
+			}
+			if (dataInfo.cat == 3) {
+				document.getElementById('episodesBox').style.display = 'block';
+				zyjuji(dataInfo.cat, dataInfo.vid, years, t);
 			}
 		} else {
 			alert('网络错误！');
@@ -160,7 +186,7 @@ if (window.top != window) {
 const so = () => {
 	const value = encodeURI(document.getElementById('search').value.replace(/\s+/g, ''));
 	if (value != '') {
-		window.open('./search/?' + value + '.html');
+		window.open('../search/?' + value + '.html');
 	} else {
 		alert('请输入关键词！');
 	}

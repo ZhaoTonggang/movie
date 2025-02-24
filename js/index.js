@@ -8,7 +8,7 @@ post().then(datas => {
 		let adata = '';
 		const len = datas.length;
 		for (let i = 0; i < len; i++) {
-			bdata += '<li class="item"><a target="_blank" href="./play/?cat=' + datas[i].cat + '&vid=' +
+			bdata += '<li class="item"><a href="./play/?cat=' + datas[i].cat + '&vid=' +
 				encodeURI(datas[i].ent_id) + '.html"><i style="background-image:url(' + datas[i].pic_lists[0]
 				.url + '"></i><span>' + datas[i].title + '</span></a></li>';
 			adata += '<li class="circle"></li>';
@@ -83,7 +83,7 @@ const list = (j, id) => {
 			let dom;
 			datas = datas.data;
 			for (let i = 0, len = datas.length; i < len; i++) {
-				idata += '<a target="_blank" href="./play/?cat=' + datas[i].cat + '&vid=' + encodeURI(datas[
+				idata += '<a href="./play/?cat=' + datas[i].cat + '&vid=' + encodeURI(datas[
 						i].ent_id) + '.html"><i style="background-image:url(' + datas[i].cover +
 					')"><b>' + datas[i].pv + '</b></i><span>' + datas[i].title + '</span></a>';
 			}
