@@ -80,7 +80,6 @@ const list = (j, id) => {
 	post('cat=' + j).then(datas => {
 		if (datas.code == 1 && datas.data.length > 0) {
 			let idata = '';
-			let dom;
 			datas = datas.data;
 			for (let i = 0, len = datas.length; i < len; i++) {
 				idata += '<a href="./play/?cat=' + datas[i].cat + '&vid=' + encodeURI(datas[
@@ -107,8 +106,12 @@ const so = () => {
 	}
 }
 // 回车搜索
-window.onkeydown = () => {
-	if (window.event && window.event.keyCode == 13 && search == document.activeElement) {
+document.addEventListener('keydown', (e) => {
+	if (e.key == 'Enter' && search == document.activeElement) {
 		so();
 	}
+})
+// 关闭声明
+const endtip = () => {
+	document.getElementById('tip').style.display = 'none';
 }

@@ -1,3 +1,33 @@
+/* 声明 */
+#tip {
+	position: fixed;
+	display: inline-table;
+	left: 0;
+	bottom: 0;
+	top: 0;
+	right: 0;
+	margin: auto;
+	text-align: center;
+	background: #000;
+	z-index: 9999;
+	border-radius: 0.1rem;
+}
+
+#tip p {
+	color: #FFF;
+	margin: 0.3rem;
+}
+
+#tip i {
+	display: block;
+	position: static;
+	width: 0.8rem;
+	height: 0.8rem;
+	background: url('../images/tip_close.png') no-repeat center / cover;
+	margin: 0.2rem auto;
+	cursor: pointer;
+}
+
 /* 轮播 */
 #lunbo,
 #item,

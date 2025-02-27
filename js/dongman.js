@@ -86,8 +86,8 @@ const so = () => {
 	}
 }
 // 回车搜索
-window.onkeydown = () => {
-	if (window.event && window.event.keyCode == 13 && search == document.activeElement) {
+document.addEventListener('keydown', (e) => {
+	if (e.key == 'Enter' && search == document.activeElement) {
 		so();
 	}
-}
+})

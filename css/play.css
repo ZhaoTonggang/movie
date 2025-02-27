@@ -1,47 +1,18 @@
-.play-box {
-	position: relative;
+#play {
+	display: block;
 	border-radius: 10px;
 	height: 12rem;
-	background: currentColor url('../images/new.gif') no-repeat center;
+	background: currentColor url('../images/new.gif') no-repeat bottom;
 	border: none;
 	overflow: hidden;
 	margin: 0.3rem 0;
-}
-
-#play {
 	position: relative;
 	z-index: 0;
 	width: 100%;
-	height: 100%;
-	border: none;
-	overflow: hidden;
 }
 
-.play-box #tip {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: 100%;
+.info {
 	text-align: center;
-	background: #000;
-	z-index: 99;
-}
-
-.play-box #tip p {
-	color: #FFF;
-	margin: 0.3rem;
-}
-
-.play-box #tip i {
-	display: block;
-	position: absolute;
-	width: 1.6rem;
-	height: 1.6rem;
-	background: url('../images/tip_close.png') no-repeat center;
-	top: 0;
-	right: 0;
-	background-size: 0.7rem 0.7rem;
-	cursor: pointer;
 }
 
 /* 来源 */
@@ -88,7 +59,7 @@ input[type='radio']:checked+label,
 
 /* 选集 */
 .template,
-.eptemp {
+#episodesList {
 	display: flex;
 	flex-wrap: wrap;
 	align-content: space-around;
@@ -99,7 +70,7 @@ input[type='radio']:checked+label,
 	justify-content: flex-start;
 }
 
-.eptemp {
+#episodesList {
 	justify-content: space-around;
 }
 
@@ -137,14 +108,14 @@ input[type='radio']:checked+label,
 }
 
 /* 综艺选集 */
-.episodes .episodes-list.float-none a {
+/* .episodes .episodes-list.float-none a {
 	float: none;
 	margin-right: 0.5rem;
 	height: auto;
 	min-height: 0.7rem;
 	line-height: 0.7rem;
 	padding: 0.6rem 0.5rem
-}
+} */
 
 /* 更多信息 */
 #itemList {
@@ -167,25 +138,25 @@ input[type='radio']:checked+label,
 
 .more h2,
 .more span,
-.more div {
+.desc {
 	display: block;
-	margin-left: 5rem;
 	line-height: 1rem;
 	font-size: 0.5rem;
+}
+
+.more h2,
+.more span {
+	margin-left: 5rem;
+}
+
+.desc {
+	margin-left: 0
 }
 
 .more h2 {
 	font-size: 0.7rem;
 	font-weight: bold;
 	margin-bottom: 0.5rem;
-}
-
-.more div {
-	margin-left: 0
-}
-
-.more.desc {
-	min-height: 0
 }
 
 /* 无数据 */
@@ -197,7 +168,7 @@ input[type='radio']:checked+label,
 }
 
 @media screen and (orientation: portrait) {
-	.play-box {
+	#play {
 		height: 10rem;
 	}
 }

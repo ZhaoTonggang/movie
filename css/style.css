@@ -20,7 +20,9 @@ body {
 }
 
 h1,
-h2 {
+h2,
+p,
+a {
 	font-size: 100%
 }
 
@@ -313,37 +315,20 @@ input::-ms-input-placeholder {
 }
 
 /* 加载动画 */
-.loading {
-	margin: 1rem auto;
-}
-
-.loading .s-loading,
-.list .more .s-loading {
-	margin: 0 auto
-}
-
-.loading .s-loading i,
-.list .more .s-loading i {
-	background: #FB7299
-}
-
-.more .s-loading {
-	display: none
-}
-
 .s-loading {
 	display: block;
 	width: 2.2rem;
-	height: .6rem
+	height: 0.6rem;
+	margin: 0.3rem auto;
 }
 
-.s-loading>i {
+.s-loading i {
 	display: block;
 	float: left;
 	width: .6rem;
 	height: .6rem;
 	margin-left: .2rem;
-	background: #FFF;
+	background-color: #FB7299;
 	border-radius: 50%;
 	-webkit-animation: bouncedelay 1.6s infinite ease-in-out;
 	animation: bouncedelay 1.6s infinite ease-in-out;
@@ -351,7 +336,7 @@ input::-ms-input-placeholder {
 	animation-fill-mode: both
 }
 
-.s-loading>i:first-child {
+.s-loading i:first-child {
 	margin-left: 0
 }
 
