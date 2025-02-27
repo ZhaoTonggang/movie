@@ -8,7 +8,8 @@
 	-ms-user-select: none;
 	user-select: none;
 	scroll-behavior: smooth;
-	font-family: YouYuan, Yuanti SC, KaiTi, Arial, sans-serif
+	font-family: YouYuan, Yuanti SC, KaiTi, Arial, sans-serif;
+	transition: all 1s ease-in-out;
 }
 
 body {
@@ -430,8 +431,7 @@ input::-ms-input-placeholder {
 	position: relative;
 	width: 4.6rem;
 	height: 6.2rem;
-	background: #EEE no-repeat center;
-	background-size: 4.6rem 6.2rem;
+	background: bisque url('../images/new.gif') no-repeat center/cover;
 	border-radius: 0.1rem;
 	overflow: hidden
 }
