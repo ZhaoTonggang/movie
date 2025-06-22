@@ -8,8 +8,8 @@ post().then(datas => {
 		let adata = '';
 		const len = datas.length;
 		for (let i = 0; i < len; i++) {
-			bdata += '<li class="item"><a href="./play/?cat=' + datas[i].cat + '&vid=' +
-				encodeURI(datas[i].ent_id) + '.html"><i style="background-image:url(' + datas[i].pic_lists[0]
+			bdata += '<li class="item"><a href="./play/?' + btoa(encodeURI(datas[i].cat + '&' + datas[i]
+					.ent_id)) + '.html"><i style="background-image:url(' + datas[i].pic_lists[0]
 				.url + '"></i><span>' + datas[i].title + '</span></a></li>';
 			adata += '<li class="circle"></li>';
 		}
@@ -69,8 +69,6 @@ post().then(datas => {
 		}
 		//初始化轮播图，使页面加载完成后立即显示第一张图片和对应的圆点状态
 		move(index);
-
-
 	} else {
 		alert('网络错误！');
 	}
@@ -82,8 +80,8 @@ const list = (j, id) => {
 			let idata = '';
 			datas = datas.data;
 			for (let i = 0, len = datas.length; i < len; i++) {
-				idata += '<a href="./play/?cat=' + datas[i].cat + '&vid=' + encodeURI(datas[
-						i].ent_id) + '.html"><i style="background-image:url(' + datas[i].cover +
+				idata += '<a href="./play/?' + btoa(encodeURI(datas[i].cat + '&' + datas[i].ent_id)) +
+					'.html"><i style="background-image:url(' + datas[i].cover +
 					')"><b>' + datas[i].pv + '</b></i><span>' + datas[i].title + '</span></a>';
 			}
 			document.getElementById(id).innerHTML = idata;

@@ -69,7 +69,7 @@ const guess = (c, a) => {
 			let bdata = '';
 			datas = datas.data.movies;
 			for (let i = 0, len = datas.length; i < len; i++) {
-				bdata += '<a href="./?cat=' + c + '&vid=' + encodeURI(datas[i].id) +
+				bdata += '<a href="./?' + btoa(encodeURI(c + '&' + datas[i].id)) +
 					'.html"><i style="background-image:url(' + datas[i].cdncover + '"></i><span>' + datas[i]
 					.title + '</span></a>';
 			}
@@ -90,7 +90,7 @@ const getvl = (a) => {
 }
 // 播放
 const getlist = () => {
-	document.getElementById('play').src = decodeURI(atob(getvl('sjx'))) + ((dataInfo.cat != 1) ? getvl('sjj') :
+	document.getElementById('play').src = decodeURI(atob(getvl('sjx'))) + ((dataInfo[0] != 1) ? getvl('sjj') :
 		getvl('sti'));
 }
 // 初始化
@@ -98,18 +98,9 @@ if (window.top != window) {
 	alert('当您看到这条提示意味着：您所访问的网站正在恶意调用本站资源，本站对偷盗资源的行为0容忍，点击确认跳转正版体验。');
 	window.open(urldata, '_self');
 } else if (urldata.indexOf('?') > -1 && urldata.indexOf('.html') > -1) {
-	const urlarr = urldata.substring(urldata.indexOf('?') + 1, urldata.indexOf('.html'));
-	const urlarrs = urlarr.split('&');
-	for (let i = 0, len = urlarrs.length; i < len; i++) {
-		let data = urlarrs[i].split('=');
-		if (data == "") {
-			alert('网络错误！');
-		} else {
-			dataInfo[data[0]] = data[1];
-		}
-	}
+	dataInfo = decodeURI(atob(urldata.substring(urldata.indexOf('?') + 1, urldata.indexOf('.html')))).split('&');
 	// 获取详细信息
-	post('cat=' + dataInfo.cat + '&id=' + dataInfo.vid).then(datas => {
+	post('cat=' + dataInfo[0] + '&id=' + dataInfo[1]).then(datas => {
 		if (datas.code == 1) {
 			const jiexi = ['aHR0cHM6Ly9qeC54bWZsdi5jb20vP3VybD0=', 'aHR0cHM6Ly9qeC5wbGF5ZXJqeS5jb20vP3VybD0=',
 				'aHR0cHM6Ly9kbWp4Lm0zdTgudHYvP3VybD0=', 'aHR0cHM6Ly9qeC5tM3U4LnR2L2ppZXhpLz91cmw9',
@@ -127,7 +118,7 @@ if (window.top != window) {
 			document.getElementById('span2').innerHTML += arr(datas.moviecategory);
 			document.getElementById('span3').innerHTML += arr(datas.director);
 			document.getElementById('span4').innerHTML += arr(datas.actor);
-			guess(dataInfo.cat, arr(datas.actor, 'y'));
+			guess(dataInfo[0], arr(datas.actor, 'y'));
 			// 获取平台
 			const siteList = {
 				'imgo': '芒果',
@@ -154,10 +145,10 @@ if (window.top != window) {
 				let b = (p in siteList) ? siteList[p] : p;
 				let plch = (p == t) ? 'checked' : '';
 				// 判断视频类型
-				let plvl = (dataInfo.cat != 1) ? p : playurl[p].default_url;
-				let clk = (dataInfo.cat == 1) ? 'getlist()' : (dataInfo.cat == 3) ? 'zyjuji(' + dataInfo.cat +
-					',\'' + dataInfo.vid + '\',' + years + ',\'' + p + '\')' : 'juji(' + dataInfo.cat + ',\'' +
-					dataInfo.vid + '\',' + upinfo[p] + ',\'' + p + '\')';
+				let plvl = (dataInfo[0] != 1) ? p : playurl[p].default_url;
+				let clk = (dataInfo[0] == 1) ? 'getlist()' : (dataInfo[0] == 3) ? 'zyjuji(' + dataInfo[0] +
+					',\'' + dataInfo[1] + '\',' + years + ',\'' + p + '\')' : 'juji(' + dataInfo[0] + ',\'' +
+					dataInfo[1] + '\',' + upinfo[p] + ',\'' + p + '\')';
 				stvalue += '<input ' + plch + ' type="radio" name="sti" value="' + plvl + '"id="' + p +
 					'" onclick="' + clk + '"/><label for="' + p + '">' + b + '</label>';
 			}
@@ -170,13 +161,13 @@ if (window.top != window) {
 			}
 			document.getElementById('jxList').innerHTML = jxvalue;
 			// 自动解析剧集
-			if (dataInfo.cat == 2 || dataInfo.cat == 4) {
+			if (dataInfo[0] == 2 || dataInfo[0] == 4) {
 				document.getElementById('episodesBox').style.display = 'block';
-				juji(dataInfo.cat, dataInfo.vid, upinfo[t], t);
+				juji(dataInfo[0], dataInfo[1], upinfo[t], t);
 			}
-			if (dataInfo.cat == 3) {
+			if (dataInfo[0] == 3) {
 				document.getElementById('episodesBox').style.display = 'block';
-				zyjuji(dataInfo.cat, dataInfo.vid, years, t);
+				zyjuji(dataInfo[0], dataInfo[1], years, t);
 			}
 		} else {
 			alert('网络错误！');

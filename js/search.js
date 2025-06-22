@@ -16,7 +16,7 @@ const so = (e) => {
 			let data = '';
 			datas = datas.data;
 			for (let i = 0, len = datas.length; i < len; i++) {
-				data += '<a href="../play/?cat=' + datas[i].cat_id + '&vid=' + datas[i].en_id +
+				data += '<a href="../play/?' + btoa(encodeURI(datas[i].cat_id + '&' + datas[i].en_id)) +
 					'.html"><i style="background-image:url(' + datas[i].cover +
 					')"><b>' + datas[i].cat_name + '</b></i><span>' + datas[i].title + '</span></a>';
 			}

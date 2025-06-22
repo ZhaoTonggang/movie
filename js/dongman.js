@@ -65,7 +65,7 @@ const getmov = (s) => {
 			let data = '';
 			datas = datas.data;
 			for (let i = 0, len = datas.length; i < len; i++) {
-				data += '<a href="../../play/?cat=4&vid=' + encodeURI(datas[i].id) +
+				data += '<a href="../../play/?' + btoa(encodeURI('4&' + datas[i].id)) +
 					'.html"><i style="background-image:url(https://' + datas[i].cdncover +
 					')"><b>更新至' + datas[i].upinfo + '集</b></i><span>' + datas[i].title + '</span></a>';
 			}
