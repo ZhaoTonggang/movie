@@ -253,7 +253,7 @@ input::-ms-input-placeholder {
 .header .search input {
 	display: block;
 	position: absolute;
-	width: 2rem;
+	width: 4rem;
 	height: 1rem;
 	line-height: 1rem;
 	top: 0.3rem;
