@@ -14,6 +14,28 @@ const arr = (e, y) => {
 	}
 	return arre;
 }
+// 保存数据到数据库
+const putDB = async (id, tit, img) => {
+	if (!db) {
+		await initdb();
+	}
+	if (!id || !img) {
+		console.error("写入数据为空！");
+		return;
+	}
+	const request = db.transaction([storeName], "readwrite").objectStore(storeName).put({
+		play: id.trim(),
+		title: tit.trim(),
+		img: img.trim(),
+		time: new Date().getTime()
+	});
+	request.onsuccess = () => {
+		console.log("数据写入成功！");
+	};
+	request.onerror = (e) => {
+		console.error("数据写入出错！", e.target.error);
+	};
+}
 // 剧集
 const juji = async (c, a, t, s) => {
 	let start = 1;
@@ -98,7 +120,8 @@ if (window.top != window) {
 	alert('当您看到这条提示意味着：您所访问的网站正在恶意调用本站资源，本站对偷盗资源的行为0容忍，点击确认跳转正版体验。');
 	window.open(urldata, '_self');
 } else if (urldata.indexOf('?') > -1 && urldata.indexOf('.html') > -1) {
-	dataInfo = decodeURI(atob(urldata.substring(urldata.indexOf('?') + 1, urldata.indexOf('.html')))).split('&');
+	const playId = urldata.substring(urldata.indexOf('?') + 1, urldata.indexOf('.html'));
+	dataInfo = decodeURI(atob(playId)).split('&');
 	// 获取详细信息
 	post('cat=' + dataInfo[0] + '&id=' + dataInfo[1]).then(datas => {
 		if (datas.code == 1) {
@@ -119,6 +142,8 @@ if (window.top != window) {
 			document.getElementById('span3').innerHTML += arr(datas.director);
 			document.getElementById('span4').innerHTML += arr(datas.actor);
 			guess(dataInfo[0], arr(datas.actor, 'y'));
+			// putDB
+			putDB(playId, datas.title, datas.cdncover);
 			// 获取平台
 			const siteList = {
 				'imgo': '芒果',
