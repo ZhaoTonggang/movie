@@ -94,32 +94,53 @@ list(2, 'dianyingList');
 list(3, 'dianshiList');
 list(4, 'zongyiList');
 list(5, 'dongmanList');
-// 最近观看
-window.onload = () => {
-	const request = db.transaction([storeName], "readonly").objectStore(storeName).getAll();
-	request.onsuccess = (e) => {
-		// 获取数据并按时间倒序排列
-		const zjList = document.getElementById("zuijinList");
-		const datas = e.target.result.sort((a, b) => b.time - a.time);
-		const len = datas.length;
-		if (len > 0) {
-			let idata = '';
-			for (let i = 0; i < len; i++) {
-				idata += '<a href="./play/?' + datas[i].play + '.html"><i style="background-image:url(' +
-					datas[i].img + ')"><b>' + new Date(datas[i].time).toLocaleString() + '</b></i><span>' +
-					datas[i]
-					.title +
-					'</span></a>';
+// 获取最近观看
+(async () => {
+	try {
+		// 打开数据库
+		db = await openDatabase();
+		// 执行数据写入操作
+		await new Promise((resolve, reject) => {
+			const transaction = db.transaction([storeName], "readonly");
+			const request = transaction.objectStore(storeName).getAll();
+			request.onsuccess = (e) => {
+				// 获取数据并按时间倒序排列
+				const zjList = document.getElementById("zuijinList");
+				const datas = e.target.result.sort((a, b) => b.time - a.time);
+				const len = datas.length;
+				if (len > 0) {
+					let idata = '';
+					for (let i = 0; i < len; i++) {
+						idata += '<a href="./play/?' + datas[i].play +
+							'.html"><i style="background-image:url(' + datas[i].img + ')"><b>' +
+							new Date(datas[i].time).toLocaleString() + '</b></i><span>' + datas[i]
+							.title + '</span></a>';
+					}
+					zjList.innerHTML = idata;
+				} else {
+					zjList.innerHTML = '<div class="no-data">还没有观看记录哦，快来找找有哪些好看的吧！</div>';
+				}
+				resolve(true);
 			}
-			zjList.innerHTML = idata;
-		} else {
-			zjList.innerHTML = '<div class="no-data">还没有观看记录哦，快来找找有哪些好看的吧！</div>';
+			request.onerror = (e) => {
+				const error = new Error("数据写入出错: " + e.target.error);
+				console.error("读取数据时出错", e.target.error);
+				reject(error);
+			};
+			// 事务完成处理
+			transaction.oncomplete = () => console.debug("事务完成");
+			transaction.onerror = (e) => console.error("事务出错:", e.target.error);
+		});
+	} catch (error) {
+		console.error("操作失败:", error);
+	} finally {
+		// 关闭数据库
+		if (db) {
+			db.close();
+			console.debug("数据库已关闭");
 		}
 	}
-	request.onerror = (e) => {
-		console.error("读取数据时出错", e.target.error);
-	}
-}
+})();
 // 关闭声明
 const endtip = () => {
 	document.getElementById('tip').style.display = 'none';

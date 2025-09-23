@@ -14,28 +14,48 @@ const arr = (e, y) => {
 	}
 	return arre;
 }
-// 保存数据到数据库
+// 写入最近观看
 const putDB = async (id, tit, img) => {
-	if (!db) {
-		await initdb();
-	}
-	if (!id || !img) {
+	if (!id || !tit || !img) {
 		console.error("写入数据为空！");
-		return;
+		return false;
 	}
-	const request = db.transaction([storeName], "readwrite").objectStore(storeName).put({
-		play: id.trim(),
-		title: tit.trim(),
-		img: img.trim(),
-		time: new Date().getTime()
-	});
-	request.onsuccess = () => {
-		console.log("数据写入成功！");
-	};
-	request.onerror = (e) => {
-		console.error("数据写入出错！", e.target.error);
-	};
-}
+	try {
+		// 打开数据库
+		db = await openDatabase();
+		// 执行数据写入操作
+		return await new Promise((resolve, reject) => {
+			const transaction = db.transaction([storeName], "readwrite");
+			const request = transaction.objectStore(storeName).put({
+				play: id.trim(),
+				title: tit.trim(),
+				img: img.trim(),
+				time: new Date().getTime()
+			});
+			request.onsuccess = () => {
+				console.log("数据写入成功！");
+				resolve(true);
+			};
+			request.onerror = (e) => {
+				const error = new Error("数据写入出错: " + e.target.error);
+				console.error("操作失败:", error);
+				reject(error);
+			};
+			// 事务完成处理
+			transaction.oncomplete = () => console.debug("事务完成");
+			transaction.onerror = (e) => console.error("事务出错:", e.target.error);
+		});
+	} catch (error) {
+		console.error("操作失败:", error);
+		return false;
+	} finally {
+		// 关闭数据库
+		if (db) {
+			db.close();
+			console.debug("数据库已关闭");
+		}
+	}
+};
 // 剧集
 const juji = async (c, a, t, s) => {
 	let start = 1;
