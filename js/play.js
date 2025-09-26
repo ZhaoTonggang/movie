@@ -68,18 +68,19 @@ const juji = async (c, a, t, s) => {
 	}
 	for (let i = 1; i <= ts; i++) {
 		let end = t < 200 * i ? t : 200 * i;
-		await post('cat=' + c + '&id=' + a + '&start=' + start + '&end=' + end + '&site=' + s).then(datas => {
-			if (datas.code == 1) {
-				datas = datas.data.allepidetail[s];
-				for (let d = 0, len = datas.length; d < len; d++) {
-					jjdata += '<input type="radio" name="sjj" value="' + datas[d].url + '"id="' + i +
-						'-' + d + '" onclick="getlist()"/><label for="' + i + '-' + d + '">第' +
-						datas[d].playlink_num + '集</label>';
+		await post('detail', 'cat=' + c + '&id=' + a + '&start=' + start + '&end=' + end + '&site=' + s).then(
+			datas => {
+				if (datas.code == 1) {
+					datas = datas.data.allepidetail[s];
+					for (let d = 0, len = datas.length; d < len; d++) {
+						jjdata += '<input type="radio" name="sjj" value="' + datas[d].url + '"id="' + i +
+							'-' + d + '" onclick="getlist()"/><label for="' + i + '-' + d + '">第' +
+							datas[d].playlink_num + '集</label>';
+					}
+				} else {
+					jjdata = '<div class="no-data">无法获取剧集列表，请尝试切换平台</div>';
 				}
-			} else {
-				jjdata = '<div class="no-data">无法获取剧集列表，请尝试切换平台</div>';
-			}
-		}).catch(e => console.error('[404]错误日志：', e));
+			}).catch(e => console.error('[404]错误日志：', e));
 		start = end + 1;
 	}
 	document.getElementById('episodesList').innerHTML = jjdata;
@@ -89,7 +90,7 @@ const zyjuji = async (c, a, n, s) => {
 	let zydata = '';
 	n = Object.keys(n);
 	for (let j = 0, len = n.length; j < len; j++) {
-		await post('cat=' + c + '&id=' + a + '&year=' + n[j] + '&site=' + s).then(datas => {
+		await post('detail', 'cat=' + c + '&id=' + a + '&year=' + n[j] + '&site=' + s).then(datas => {
 			if (datas.code == 1) {
 				datas = datas.data.defaultepisode;
 				for (let i = 0, len = datas.length; i < len; i++) {
@@ -106,7 +107,7 @@ const zyjuji = async (c, a, n, s) => {
 }
 // 猜你喜欢
 const guess = (c, a) => {
-	post('cat=' + c + '&act=' + a).then(datas => {
+	post('query', 'cat=' + c + '&act=' + a).then(datas => {
 		if (datas.code == 1) {
 			let bdata = '';
 			datas = datas.data.movies;
@@ -143,7 +144,7 @@ if (window.top != window) {
 	const playId = urldata.substring(urldata.indexOf('?') + 1, urldata.indexOf('.html'));
 	dataInfo = decodeURI(atob(playId)).split('&');
 	// 获取详细信息
-	post('cat=' + dataInfo[0] + '&id=' + dataInfo[1]).then(datas => {
+	post('detail', 'cat=' + dataInfo[0] + '&id=' + dataInfo[1]).then(datas => {
 		if (datas.code == 1) {
 			const jiexi = ['aHR0cHM6Ly9qeC54bWZsdi5jb20vP3VybD0=', 'aHR0cHM6Ly9qeC5wbGF5ZXJqeS5jb20vP3VybD0=',
 				'aHR0cHM6Ly9kbWp4Lm0zdTgudHYvP3VybD0=', 'aHR0cHM6Ly9qeC5tM3U4LnR2L2ppZXhpLz91cmw9',

@@ -1,7 +1,7 @@
 // 严格模式
 "use strict";
 // 获取轮播
-post().then(datas => {
+post('block').then(datas => {
 	if (datas.code == 1 && datas.data.length > 0) {
 		datas = datas.data;
 		let bdata = '';
@@ -75,7 +75,7 @@ post().then(datas => {
 }).catch(e => console.error('[404]错误日志：', e));
 // 获取首页数据
 const list = (j, id) => {
-	post('cat=' + j).then(datas => {
+	post('list', 'cat=' + j).then(datas => {
 		if (datas.code == 1 && datas.data.length > 0) {
 			let idata = '';
 			datas = datas.data;
@@ -90,6 +90,7 @@ const list = (j, id) => {
 		}
 	}).catch(e => console.error('[404]错误日志：', e))
 }
+list(1, 'tuijianList');
 list(2, 'dianyingList');
 list(3, 'dianshiList');
 list(4, 'zongyiList');

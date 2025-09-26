@@ -124,7 +124,7 @@ const getmov = (s) => {
 		pgv = '';
 		document.getElementById('prev').style.display = 'none';
 	}
-	post('catid=' + urlId + pxv + lxv + ndv + dqv + mxv + pgv).then(datas => {
+	post('filter', 'catid=' + urlId + pxv + lxv + ndv + dqv + mxv + pgv).then(datas => {
 		if (datas.code == 1) {
 			let data = '';
 			datas = datas.data;

@@ -12,7 +12,7 @@ if (window.top != window) {
 	document.getElementById('search').value = value;
 	document.getElementById('kword').innerText = '“' + value + '”';
 	// 获取详细信息
-	post('kw=' + value).then(datas => {
+	post('search', 'kw=' + value).then(datas => {
 		if (datas.code == 1) {
 			let data = '';
 			datas = datas.data;
