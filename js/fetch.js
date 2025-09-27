@@ -3,9 +3,9 @@
 let timeout = null;
 const cdtopbt = document.getElementById('scrollToTop');
 // 封装POST
-const post = async (path, data = '') => {
-	const response = await fetch('https://server.heheda.top/movie/?' + path, {
-		body: data,
+const post = async (type, data = '') => {
+	const response = await fetch('https://server.heheda.top/jiexi/', {
+		body: 'type=' + type + '&' + data,
 		method: 'POST',
 		cache: 'force-cache',
 		headers: {
