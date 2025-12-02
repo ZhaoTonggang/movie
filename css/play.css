@@ -127,13 +127,13 @@ input[type='radio']:checked+label,
 	min-height: 6.3rem
 }
 
-.more i {
+.more img {
 	display: block;
 	position: absolute;
 	width: 4.6rem;
 	height: 6.2rem;
 	border-radius: 5px;
-	background-size: 4.6rem 6.2rem
+	object-fit: cover;
 }
 
 .more h2,

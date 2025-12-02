@@ -1,8 +1,6 @@
 /* 关键词提示 */
-span {
-	overflow: hiddden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+b {
+	color: red;
 }
 
 .keywords {

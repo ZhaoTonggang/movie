@@ -112,8 +112,10 @@ const guess = (c, a) => {
 			let bdata = '';
 			datas = datas.data.movies;
 			for (let i = 0, len = datas.length; i < len; i++) {
+				let coverData = /https:\/\//i.test(datas[i].cdncover) ? datas[i].cdncover : ('https:' +
+					datas[i].cdncover);
 				bdata += '<a href="./?' + btoa(encodeURI(c + '&' + datas[i].id)) + '.html"><img src="' +
-					datas[i].cdncover + '" alt="' + datas[i].title + '" loading="lazy" /><p>' + datas[i]
+					coverData + '" alt="' + datas[i].title + '" loading="lazy" /><p>' + datas[i]
 					.title + '</p></a>';
 			}
 			document.getElementById('guessList').innerHTML = bdata;
@@ -152,10 +154,12 @@ if (window.top != window) {
 			];
 			let jxvalue = '';
 			let stvalue = '';
+			const morei = document.getElementById('morei');
 			datas = datas.data;
 			document.title = '正在放映:《' + datas.title + '》- 风影阁';
 			document.getElementById('titleItem').innerHTML += '《' + datas.title + '》';
-			document.getElementById('morei').style.backgroundImage = 'url(' + datas.cdncover + ')';
+			morei.src = datas.cdncover;
+			morei.alt = datas.title;
 			document.getElementById('moreh5').innerHTML = datas.title;
 			document.getElementById('mddiv').innerHTML += datas.description;
 			document.getElementById('span1').innerHTML += arr(datas.area);
