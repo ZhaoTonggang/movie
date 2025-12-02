@@ -423,42 +423,44 @@ input::-ms-input-placeholder {
 	display: block;
 	width: 4.6rem;
 	height: 7.5rem;
-	overflow: hidden
+	overflow: hidden;
+	position: relative;
 }
 
-.list .items a i {
+/* 列表图片样式 */
+.list .items a img {
 	display: block;
-	position: relative;
 	width: 4.6rem;
 	height: 6.2rem;
 	background: bisque url('../images/new.gif') no-repeat center/cover;
 	border-radius: 0.1rem;
-	overflow: hidden
-}
-
-.list .items a i b {
-	display: block;
-	position: absolute;
-	width: 4.4rem;
-	padding-right: 0.2rem;
-	height: 1.2rem;
-	line-height: 1.2rem;
-	bottom: 0;
-	right: 0;
-	color: #FFF;
-	background: linear-gradient(-180deg, transparent, rgba(0, 0, 0, .4) 99%);
-	font-style: normal;
-	font-weight: normal;
-	font-size: 0.45rem;
-	text-align: right
+	object-fit: cover;
 }
 
 .list .items a span {
 	display: block;
+	width: 4.4rem;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	padding-right: 0.2rem;
+	border-radius: 0.1rem;
+	color: #FFF;
+	background: linear-gradient(180deg, rgb(255 255 255 / 0%), rgb(0 0 0 / 50%) 50%);
+	font-style: normal;
+	font-weight: normal;
+	font-size: 0.45rem;
+	text-align: right;
+	position: absolute;
+	bottom: 1.3rem;
+}
+
+.list .items a p {
+	display: block;
+	position: relative;
 	color: #333;
-	margin-top: 0.2rem;
 	text-align: center;
 	font-weight: bold;
+	margin-top: 0.1rem;
 }
 
 .list .more {

@@ -18,8 +18,9 @@ if (window.top != window) {
 			datas = datas.data;
 			for (let i = 0, len = datas.length; i < len; i++) {
 				data += '<a href="../play/?' + btoa(encodeURI(datas[i].cat_id + '&' + datas[i].en_id)) +
-					'.html"><i style="background-image:url(' + datas[i].cover +
-					')"><b>' + datas[i].cat_name + '</b></i><span>' + datas[i].title + '</span></a>';
+					'.html"><img src="' + datas[i].cover + '" alt="' + datas[i].title +
+					'" loading="lazy" /><span>热度：' + datas[i].cat_name + '</span><p>' + datas[i].title +
+					'</p></a>';
 			}
 			document.getElementById('listList').innerHTML = data;
 		} else {

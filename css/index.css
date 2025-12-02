@@ -78,14 +78,13 @@
 	z-index: 9;
 }
 
-#item li a,
-#item li img,
-#item li i {
+/* 轮播图图片样式 */
+#item li img {
 	display: block;
 	width: 100%;
 	height: 100%;
-	background-position: center;
-	background-size: cover;
+	object-fit: cover;
+	/* background: bisque url('../images/new.gif') no-repeat center/cover; */
 }
 
 #item li span {

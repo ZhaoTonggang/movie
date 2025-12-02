@@ -131,21 +131,25 @@ const getmov = (s) => {
 			for (let i = 0, len = datas.length; i < len; i++) {
 				// 根据不同分类显示不同的标签
 				let tagContent = '';
+				let coverData = /https:\/\//i.test(datas[i].cdncover) ? datas[i].cdncover : ('https:' +
+					datas[i].cdncover);
 				if (urlId == '1') {
 					// 电影显示评分
-					tagContent = '<b style="color: #fff;font-size: 0.3rem;text-align: center;">' + datas[i]
-						.comment + '</b>';
+					tagContent = '<span style="color: #fff;font-size: 0.3rem;text-align: center;">' + datas[
+							i]
+						.comment + '</span>';
 				} else if (urlId == '3') {
 					// 综艺显示标签
-					tagContent = '<b style="color: #fff;font-size: 0.3rem;text-align: center;">' + datas[i]
-						.tag + '</b>';
+					tagContent = '<span style="color: #fff;font-size: 0.3rem;text-align: center;">' + datas[
+							i]
+						.tag + '</span>';
 				} else {
 					// 电视剧和动漫显示更新信息
-					tagContent = '<b>更新至' + datas[i].upinfo + '集</b>';
+					tagContent = '<span>更新至' + datas[i].upinfo + '集</span>';
 				}
 				data += '<a href="../play/?' + btoa(encodeURI(urlId + '&' + datas[i].id)) +
-					'.html"><i style="background-image:url(https://' + datas[i].cdncover +
-					')">' + tagContent + '</i><span>' + datas[i].title + '</span></a>';
+					'.html"><img src="' + coverData + '" alt="' + datas[i].title + '" loading="lazy" />' +
+					tagContent + '<p>' + datas[i].title + '</p></a>';
 			}
 			listList.innerHTML = data;
 		} else {

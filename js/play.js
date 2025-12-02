@@ -112,9 +112,9 @@ const guess = (c, a) => {
 			let bdata = '';
 			datas = datas.data.movies;
 			for (let i = 0, len = datas.length; i < len; i++) {
-				bdata += '<a href="./?' + btoa(encodeURI(c + '&' + datas[i].id)) +
-					'.html"><i style="background-image:url(' + datas[i].cdncover + '"></i><span>' + datas[i]
-					.title + '</span></a>';
+				bdata += '<a href="./?' + btoa(encodeURI(c + '&' + datas[i].id)) + '.html"><img src="' +
+					datas[i].cdncover + '" alt="' + datas[i].title + '" loading="lazy" /><p>' + datas[i]
+					.title + '</p></a>';
 			}
 			document.getElementById('guessList').innerHTML = bdata;
 		} else {
