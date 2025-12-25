@@ -18,7 +18,7 @@ if (window.top != window) {
 			datas = datas.data;
 			for (let i = 0, len = datas.length; i < len; i++) {
 				data += '<a href="../play/?' + btoa(encodeURI(datas[i].cat_id + '&' + datas[i].en_id)) +
-					'.html"><img src="' + datas[i].cover + '" alt="' + datas[i].title +
+					'.html"><img src="' + datas[i].cover + '" onerror="noimg(event)" alt="' + datas[i].title +
 					'" loading="lazy" /><span>' + datas[i].cat_name + '</span><p>' + datas[i].title +
 					'</p></a>';
 			}

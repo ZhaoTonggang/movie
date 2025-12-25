@@ -9,8 +9,9 @@ post('block').then(datas => {
 		const len = datas.length;
 		for (let i = 0; i < len; i++) {
 			bdata += '<li class="item"><a href="./play/?' + btoa(encodeURI(datas[i].cat + '&' + datas[i]
-					.ent_id)) + '.html"><img src="' + datas[i].pic_lists[0].url + '" alt="' + datas[i].title +
-				'" loading="lazy" /><span>' + datas[i].title + '</span></a></li>';
+					.ent_id)) + '.html"><img src="' + datas[i].pic_lists[0].url +
+				'" onerror="noimg(event)" alt="' + datas[i].title + '" loading="lazy" /><span>' + datas[i]
+				.title + '</span></a></li>';
 			adata += '<li class="circle"></li>';
 		}
 		document.getElementById('item').innerHTML = bdata;
@@ -81,8 +82,8 @@ const list = (j, id) => {
 			datas = datas.data;
 			for (let i = 0, len = datas.length; i < len; i++) {
 				idata += '<a href="./play/?' + btoa(encodeURI(datas[i].cat + '&' + datas[i].ent_id)) +
-					'.html"><img src="' + datas[i].cover + '" alt="' + datas[i].title +
-					'" loading="lazy" /><span>热度：' + datas[i].pv + '</span><p>' + datas[i].title +
+					'.html"><img src="' + datas[i].cover + '" onerror="noimg(event)" alt="' + datas[i]
+					.title + '" loading="lazy" /><span>热度：' + datas[i].pv + '</span><p>' + datas[i].title +
 					'</p></a>';
 			}
 			document.getElementById(id).innerHTML = idata;
@@ -114,9 +115,9 @@ list(5, 'dongmanList');
 					let idata = '';
 					for (let i = 0; i < len; i++) {
 						idata += '<a href="./play/?' + datas[i].play + '.html"><img src="' + datas[
-								i].img + '" alt="' + datas[i].title + '" loading="lazy" /><span>' +
-							new Date(datas[i].time).toLocaleString() + '</span><p>' + datas[i]
-							.title + '</p></a>';
+								i].img + '" onerror="noimg(event)" alt="' + datas[i].title +
+							'" loading="lazy" /><span>' + new Date(datas[i].time).toLocaleString() +
+							'</span><p>' + datas[i].title + '</p></a>';
 					}
 					zjList.innerHTML = idata;
 				} else {

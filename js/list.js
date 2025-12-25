@@ -148,8 +148,8 @@ const getmov = (s) => {
 					tagContent = '<span>更新至' + datas[i].upinfo + '集</span>';
 				}
 				data += '<a href="../play/?' + btoa(encodeURI(urlId + '&' + datas[i].id)) +
-					'.html"><img src="' + coverData + '" alt="' + datas[i].title + '" loading="lazy" />' +
-					tagContent + '<p>' + datas[i].title + '</p></a>';
+					'.html"><img src="' + coverData + '" onerror="noimg(event)" alt="' + datas[i].title +
+					'" loading="lazy" />' + tagContent + '<p>' + datas[i].title + '</p></a>';
 			}
 			listList.innerHTML = data;
 		} else {

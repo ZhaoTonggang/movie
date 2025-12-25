@@ -55,3 +55,9 @@ document.addEventListener('keydown', (e) => {
 		so();
 	}
 })
+// 处理图片错误
+const noimg = (e) => {
+	let img = e.target;
+	img.src = "/images/noimg.svg"; // 设置默认图片
+	img.onerror = null; // 防止无限循环
+}

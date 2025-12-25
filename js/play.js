@@ -115,7 +115,9 @@ const guess = (c, a) => {
 				let coverData = /https:\/\//i.test(datas[i].cdncover) ? datas[i].cdncover : ('https:' +
 					datas[i].cdncover);
 				bdata += '<a href="./?' + btoa(encodeURI(c + '&' + datas[i].id)) + '.html"><img src="' +
-					coverData + '" alt="' + datas[i].title + '" loading="lazy" /><p>' + datas[i]
+					coverData + '" onerror="noimg(event)" alt="' + datas[i].title +
+					'" loading="lazy" /><p>' +
+					datas[i]
 					.title + '</p></a>';
 			}
 			document.getElementById('guessList').innerHTML = bdata;
