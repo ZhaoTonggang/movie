@@ -5,9 +5,9 @@
 	"display": "standalone",
 	"name": "风影阁",
 	"orientation": "any",
-	"scope": "/mov",
+	"scope": "/",
 	"short_name": "风影阁",
-	"start_url": "/mov",
+	"start_url": "/",
 	"theme_color": "#ffffff",
 	"manifestUrl": "./manifest.json",
 	"categories": [
