@@ -4,8 +4,8 @@
 post('block').then(datas => {
 	if (datas.code == 1 && datas.data.length > 0) {
 		datas = datas.data;
-		let bdata = '';
-		let adata = '';
+		let bdata = '',
+			adata = '';
 		const len = datas.length;
 		for (let i = 0; i < len; i++) {
 			bdata += '<li class="item"><a href="./play/?' + btoa(encodeURI(datas[i].cat + '&' + datas[i]
@@ -16,26 +16,26 @@ post('block').then(datas => {
 		}
 		document.getElementById('item').innerHTML = bdata;
 		document.getElementById('circle').innerHTML = adata;
-		const items = document.getElementById('item').children;
-		const circles = document.getElementById('circle').children;
-		const rightBtn = document.getElementById("btn-right");
-		const lunbo = document.getElementById('lunbo');
-		let index = 0;
-		let timer = null;
-		/*展示轮播图*/
-		const move = (e) => {
-			for (let i = 0; i < len; i++) {
-				if (i == e) {
-					items[e].className = "item active";
-					circles[e].className = "circle white";
-				} else {
-					items[i].className = "item";
-					circles[i].className = "circle";
-					circles[i].setAttribute("num", i);
+		const items = document.getElementById('item').children,
+			circles = document.getElementById('circle').children,
+			rightBtn = document.getElementById("btn-right"),
+			lunbo = document.getElementById('lunbo'),
+			/*展示轮播图*/
+			move = (e) => {
+				for (let i = 0; i < len; i++) {
+					if (i == e) {
+						items[e].className = "item active";
+						circles[e].className = "circle white";
+					} else {
+						items[i].className = "item";
+						circles[i].className = "circle";
+						circles[i].setAttribute("num", i);
+					}
 				}
-			}
 
-		}
+			}
+		let index = 0,
+			timer = null;
 		//点击右边按钮切换下一张图片
 		rightBtn.onclick = () => {
 			index = (index + 1) % len;
@@ -74,29 +74,37 @@ post('block').then(datas => {
 		alert('网络错误！');
 	}
 }).catch(e => console.error('[404]错误日志：', e));
-// 获取首页数据
-const list = (j, id) => {
-	post('list', 'cat=' + j).then(datas => {
-		if (datas.code == 1 && datas.data.length > 0) {
-			let idata = '';
-			datas = datas.data;
-			for (let i = 0, len = datas.length; i < len; i++) {
-				idata += '<a href="./play/?' + btoa(encodeURI(datas[i].cat + '&' + datas[i].ent_id)) +
-					'.html"><img src="' + datas[i].cover + '" onerror="noimg(event)" alt="' + datas[i]
-					.title + '" loading="lazy" /><span>热度：' + datas[i].pv + '</span><p>' + datas[i].title +
-					'</p></a>';
+const list = (j, id) => { // 获取首页数据
+		post('list', 'cat=' + j).then(datas => {
+			if (datas.code == 1 && datas.data.length > 0) {
+				datas = datas.data;
+				let idata = '';
+				const len = datas.length;
+				for (let i = 0; i < len; i++) {
+					idata += '<a href="./play/?' + btoa(encodeURI(datas[i].cat + '&' + datas[i].ent_id)) +
+						'.html"><img src="' + datas[i].cover + '" onerror="noimg(event)" alt="' + datas[i]
+						.title + '" loading="lazy" /><span>热度：' + datas[i].pv + '</span><p>' + datas[i].title +
+						'</p></a>';
+				}
+				document.getElementById(id).innerHTML = idata;
+			} else {
+				alert('网络错误！');
 			}
-			document.getElementById(id).innerHTML = idata;
-		} else {
-			alert('网络错误！');
-		}
-	}).catch(e => console.error('[404]错误日志：', e))
-}
-list(1, 'tuijianList');
-list(2, 'dianyingList');
-list(3, 'dianshiList');
-list(4, 'zongyiList');
-list(5, 'dongmanList');
+		}).catch(e => console.error('[404]错误日志：', e))
+	},
+	endtip = () => { // 关闭声明
+		document.getElementById('tip').style.display = 'none';
+	}
+// 并行发起所有请求
+Promise.all([
+	list(1, 'tuijianList'),
+	list(2, 'dianyingList'),
+	list(3, 'dianshiList'),
+	list(4, 'zongyiList'),
+	list(5, 'dongmanList')
+]).catch(e => {
+	console.error('并行请求异常：', e);
+});
 // 获取最近观看
 (async () => {
 	try {
@@ -104,13 +112,13 @@ list(5, 'dongmanList');
 		db = await openDatabase();
 		// 执行数据写入操作
 		await new Promise((resolve, reject) => {
-			const transaction = db.transaction([storeName], "readonly");
-			const request = transaction.objectStore(storeName).getAll();
+			const transaction = db.transaction([storeName], "readonly"),
+				request = transaction.objectStore(storeName).getAll();
 			request.onsuccess = (e) => {
 				// 获取数据并按时间倒序排列
-				const zjList = document.getElementById("zuijinList");
-				const datas = e.target.result.sort((a, b) => b.time - a.time);
-				const len = datas.length;
+				const zjList = document.getElementById("zuijinList"),
+					datas = e.target.result.sort((a, b) => b.time - a.time),
+					len = datas.length;
 				if (len > 0) {
 					let idata = '';
 					for (let i = 0; i < len; i++) {
@@ -144,7 +152,3 @@ list(5, 'dongmanList');
 		}
 	}
 })();
-// 关闭声明
-const endtip = () => {
-	document.getElementById('tip').style.display = 'none';
-}
