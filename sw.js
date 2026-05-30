@@ -1,6 +1,6 @@
 'use strict';
 // 版本
-const Ver = 1780127437,
+const Ver = 1780127480,
 	cName = 'PWA-';
 // 安装：缓存资源 + 立即激活
 self.addEventListener('install', e => {
@@ -16,15 +16,6 @@ self.addEventListener('install', e => {
 			'./css/play.css',
 			'./css/search.css',
 			'./css/style.css',
-			'./icons/128.png',
-			'./icons/144.png',
-			'./icons/152.png',
-			'./icons/16.png',
-			'./icons/192.png',
-			'./icons/384.png',
-			'./icons/512.png',
-			'./icons/72.png',
-			'./icons/96.png',
 			'./images/arrow-top.png',
 			'./images/logo.png',
 			'./images/more_1.png',
