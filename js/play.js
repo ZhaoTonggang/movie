@@ -172,6 +172,20 @@ if (window.top != window) {
 			guess(dataInfo[0], arr(datas.actor, 'y'));
 			// putDB
 			putDB(playId, datas.title, datas.cdncover);
+			// 初始化媒体会话
+			if ('mediaSession' in navigator) {
+				console.log('🎵 媒体会话 API 可用');
+				navigator.mediaSession.metadata = new MediaMetadata({
+					title: '《' + datas.title + "》",
+					artist: datas.director,
+					album: datas.description,
+					artwork: [{
+						src: datas.cdncover,
+						sizes: '250x355',
+						type: 'image/jpeg'
+					}]
+				});
+			};
 			// 获取平台
 			const siteList = {
 				'imgo': '芒果',

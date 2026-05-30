@@ -1,65 +1,160 @@
 {
-	"background_color": "#ffffff",
-	"description": "风影阁为您提供最新电影、最新电视剧、最新动漫、在线观看。",
-	"dir": "auto",
-	"display": "standalone",
 	"name": "风影阁",
-	"orientation": "any",
-	"scope": "/",
 	"short_name": "风影阁",
-	"start_url": "/",
-	"theme_color": "#ffffff",
-	"manifestUrl": "./manifest.json",
-	"categories": [
-		"entertainment"
-	],
-	"screenshots": [],
+	"description": "公益性视频聚合平台，致力于为学术研究、论文引述、毕业设计等提供数据支持或参考。",
+	"start_url": "./",
+	"display": "standalone",
+	"background_color": "#ffe4c4",
+	"theme_color": "#ffe4c4",
+	"orientation": "any",
+	"scope": "./",
 	"icons": [{
-			"src": "./icons/16.png",
-			"sizes": "16x16",
-			"type": "image/png"
-		}, {
-			"src": "./icons/72.png",
-			"sizes": "72x72",
-			"type": "image/png"
-		},
-		{
-			"src": "./icons/96.png",
-			"sizes": "96x96",
-			"type": "image/png"
-		},
-		{
-			"src": "./icons/128.png",
-			"sizes": "128x128",
-			"type": "image/png"
-		},
-		{
-			"src": "./icons/144.png",
-			"sizes": "144x144",
-			"type": "image/png"
-		},
-		{
-			"src": "./icons/152.png",
-			"sizes": "152x152",
-			"type": "image/png"
-		},
-		{
-			"src": "./icons/192.png",
-			"sizes": "192x192",
-			"type": "image/png"
-		},
-		{
-			"src": "./icons/384.png",
-			"sizes": "384x384",
-			"type": "image/png"
-		},
-		{
-			"src": "./icons/512.png",
-			"sizes": "512x512",
-			"type": "image/png"
-		}
+		"src": "./images/icons/a48.png",
+		"sizes": "48x48",
+		"type": "image/png",
+		"purpose": "any"
+	}, {
+		"src": "./images/icons/a72.png",
+		"sizes": "72x72",
+		"type": "image/png",
+		"purpose": "any"
+	}, {
+		"src": "./images/icons/a96.png",
+		"sizes": "96x96",
+		"type": "image/png",
+		"purpose": "any"
+	}, {
+		"src": "./images/icons/a144.png",
+		"sizes": "144x144",
+		"type": "image/png",
+		"purpose": "any"
+	}, {
+		"src": "./images/icons/a192.png",
+		"sizes": "192x192",
+		"type": "image/png",
+		"purpose": "any"
+	}, {
+		"src": "./images/icons/a512.png",
+		"sizes": "512x512",
+		"type": "image/png",
+		"purpose": "any"
+	}, {
+		"src": "./images/icons/72.png",
+		"sizes": "72x72",
+		"type": "image/png",
+		"purpose": "maskable"
+	}, {
+		"src": "./images/icons/144.png",
+		"sizes": "144x144",
+		"type": "image/png",
+		"purpose": "maskable"
+	}, {
+		"src": "./images/icons/180.png",
+		"sizes": "180x180",
+		"type": "image/png",
+		"purpose": "maskable"
+	}, {
+		"src": "./images/icons/192.png",
+		"sizes": "192x192",
+		"type": "image/png",
+		"purpose": "maskable"
+	}, {
+		"src": "./images/icons/512.png",
+		"sizes": "512x512",
+		"type": "image/png",
+		"purpose": "maskable"
+	}, {
+		"src": "./images/icons/1024.png",
+		"sizes": "1024x1024",
+		"type": "image/png",
+		"purpose": "maskable"
+	}],
+	"screenshots": [{
+		"src": "./images/screenshots/1.png",
+		"sizes": "2564x1444",
+		"type": "image/png",
+		"form_factor": "wide",
+		"label": "风影阁",
+		"platform": "网页(WEB)"
+	}, {
+		"src": "./images/screenshots/2.png",
+		"sizes": "2564x1444",
+		"type": "image/png",
+		"form_factor": "wide",
+		"label": "风影阁",
+		"platform": "网页(WEB)"
+	}, {
+		"src": "./images/screenshots/3.png",
+		"sizes": "2564x1444",
+		"type": "image/png",
+		"form_factor": "wide",
+		"label": "风影阁",
+		"platform": "网页(WEB)"
+	}, {
+		"src": "./images/screenshots/4.png",
+		"sizes": "2564x1444",
+		"type": "image/png",
+		"form_factor": "wide",
+		"label": "风影阁",
+		"platform": "网页(WEB)"
+	}, {
+		"src": "./images/screenshots/1.png",
+		"sizes": "2564x1444",
+		"type": "image/png",
+		"form_factor": "narrow",
+		"label": "风影阁",
+		"platform": "网页(WEB)"
+	}, {
+		"src": "./images/screenshots/2.png",
+		"sizes": "2564x1444",
+		"type": "image/png",
+		"form_factor": "narrow",
+		"label": "风影阁",
+		"platform": "网页(WEB)"
+	}, {
+		"src": "./images/screenshots/3.png",
+		"sizes": "2564x1444",
+		"type": "image/png",
+		"form_factor": "narrow",
+		"label": "风影阁",
+		"platform": "网页(WEB)"
+	}, {
+		"src": "./images/screenshots/4.png",
+		"sizes": "2564x1444",
+		"type": "image/png",
+		"form_factor": "narrow",
+		"label": "风影阁",
+		"platform": "网页(WEB)"
+	}],
+	"display_override": [
+		"window-controls-overlay",
+		"standalone"
 	],
-	"shortcuts": [],
-	"id": "fengyingge",
-	"lang": "zh"
+	"shortcuts": [{
+		"name": "打开首页",
+		"short_name": "首页",
+		"url": "./",
+		"description": "打开首页",
+		"icons": [{
+			"src": "./images/icons/a96.png",
+			"sizes": "96x96",
+			"type": "image/png",
+			"purpose": "any"
+		}]
+	}],
+	"id": "heheda-fyg",
+	"dir": "ltr",
+	"lang": "zh",
+	"categories": [
+		"videos"
+	],
+	"edge_side_panel": {
+		"preferred_width": 400
+	},
+	"prefer_related_applications": false,
+	"related_applications": [{
+		"platform": "webapp",
+		"url": "https://nes.heheda.top",
+		"id": "heheda-nes"
+	}]
 }

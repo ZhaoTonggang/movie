@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8">
-		<meta name="renderer" content="webkit">
-		<meta name="referrer" content="no-referrer">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<meta charset="utf-8" />
+		<meta name="renderer" content="webkit" />
+		<meta name="referrer" content="no-referrer" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
 		<title>风影阁 - 公益性视频聚合平台</title>
-		<meta name="keywords" content="最新电影,好看电视剧,热门综艺,优秀动漫">
-		<meta name="description" content="一站式视频聚合库，在线免费试看！">
-		<link rel="stylesheet" type="text/css" href="./css/style.css">
-		<link rel="stylesheet" type="text/css" href="./css/index.css">
+		<meta name="keywords" content="最新电影,好看电视剧,热门综艺,优秀动漫" />
+		<meta name="description" content="公益性视频聚合库，在线免费试看！" />
 		<!--网站图标配置-->
-		<link rel="apple-touch-icon" sizes="192x192" href="./icons/192.png" />
-		<link rel="shortcut icon" type="image/png" sizes="16x16" href="./icons/16.png" />
-		<link rel="icon" type="image/png" sizes="72x72" href="./icons/72.png" />
-		<link rel="icon" type="image/png" sizes="96x96" href="./icons/96.png" />
-		<link rel="icon" type="image/png" sizes="128x128" href="./icons/128.png" />
-		<link rel="icon" type="image/png" sizes="144x144" href="./icons/144.png" />
-		<link rel="icon" type="image/png" sizes="152x152" href="./icons/152.png" />
-		<link rel="icon" type="image/png" sizes="192x192" href="./icons/192.png" />
-		<link rel="icon" type="image/png" sizes="384x384" href="./icons/384.png" />
-		<link rel="icon" type="image/png" sizes="512x512" href="./icons/512.png" />
+		<link rel="apple-touch-icon" sizes="192x192" href="./images/icons/192.png" />
+		<link rel="shortcut icon" type="image/png" sizes="16x16" href="./images/icons/a16.png" />
+		<link rel="icon" type="image/png" sizes="72x72" href="./images/icons/a72.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="./images/icons/a96.png" />
+		<link rel="icon" type="image/png" sizes="128x128" href="./images/icons/a128.png" />
+		<link rel="icon" type="image/png" sizes="144x144" href="./images/icons/a144.png" />
+		<link rel="icon" type="image/png" sizes="152x152" href="./images/icons/a152.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="./images/icons/a192.png" />
+		<link rel="icon" type="image/png" sizes="384x384" href="./images/icons/a384.png" />
+		<link rel="icon" type="image/png" sizes="512x512" href="./images/icons/a512.png" />
 		<!--PWA配置-->
 		<link rel="manifest" href="./manifest.json" />
+		<link rel="stylesheet" type="text/css" href="./css/style.css" />
+		<link rel="stylesheet" type="text/css" href="./css/index.css" />
 	</head>
 	<body>
+		<div id="Status"></div>
 		<div class="header">
 			<a class="logo" href="./">
 				<h1>风影阁</h1>
@@ -36,6 +37,7 @@
 				<a href="./list/?dianshi.html">电视剧</a>
 				<a href="./list/?zongyi.html">综艺</a>
 				<a href="./list/?dongman.html">动漫</a>
+				<!-- <a href="./play/?jiexi.html">解析</a> -->
 			</div>
 			<div class="search">
 				<a id="searchDo" onclick="so()"></a>
@@ -52,59 +54,59 @@
 			<ul id="circle"></ul>
 		</div>
 		<div class="list">
-			<h2 class="title">最近观看</h2>
+			<div class="title-bar">
+				<h2 class="title">最近观看</h2>
+			</div>
 			<div class="items" id="zuijinList">
 				<div class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></div>
 			</div>
 		</div>
 		<div class="list">
-			<h2 class="title">推荐</h2>
+			<div class="title-bar">
+				<h2 class="title">推荐</h2>
+			</div>
 			<div class="items" id="tuijianList">
 				<div class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></div>
 			</div>
-			<div class="more">
-				<!-- <a href="./list/?dianying.html"><img src="./images/more_1.png" />更多电影</a> -->
-				<!-- <a class="switch-button" data-list-type="dianying"><img src="./images/more_2.png" />换一批</a> -->
-			</div>
 		</div>
 		<div class="list">
-			<h2 class="title">电影</h2>
+			<div class="title-bar">
+				<h2 class="title">电影</h2>
+				<!-- <a class="switch-button" data-list-type="dianying"><img src="./images/more_2.png" />换一批</a> -->
+				<a class="more" href="./list/?dianying.html">更多<img src="./images/more_1.png" /></a>
+			</div>
 			<div class="items" id="dianyingList">
 				<div class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></div>
 			</div>
-			<div class="more">
-				<a href="./list/?dianying.html"><img src="./images/more_1.png" />更多电影</a>
-				<!-- <a class="switch-button" data-list-type="dianying"><img src="./images/more_2.png" />换一批</a> -->
-			</div>
 		</div>
 		<div class="list">
-			<h2 class="title">电视剧</h2>
+			<div class="title-bar">
+				<h2 class="title">电视剧</h2>
+				<!-- <a class="switch-button" data-list-type="dianshi"><img src="./images/more_2.png" />换一批</a> -->
+				<a class="more" href="./list/?dianshi.html">更多<img src="./images/more_1.png" /></a>
+			</div>
 			<div class="items" id="dianshiList">
 				<div class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></div>
 			</div>
-			<div class="more">
-				<a href="./list/?dianshi.html"><img src="./images/more_1.png" />更多电视剧</a>
-				<!-- <a class="switch-button" data-list-type="dianshi"><img src="./images/more_2.png" />换一批</a> -->
-			</div>
 		</div>
 		<div class="list">
-			<h2 class="title">综艺</h2>
+			<div class="title-bar">
+				<h2 class="title">综艺</h2>
+				<!-- <a class="switch-button" data-list-type="zongyi"><img src="./images/more_2.png" />换一批</a> -->
+				<a class="more" href="./list/?zongyi.html">更多<img src="./images/more_1.png" /></a>
+			</div>
 			<div class="items" id="zongyiList">
 				<div class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></div>
 			</div>
-			<div class="more">
-				<a href="./list/?zongyi.html"><img src="./images/more_1.png" />更多综艺</a>
-				<!-- <a class="switch-button" data-list-type="zongyi"><img src="./images/more_2.png" />换一批</a> -->
-			</div>
 		</div>
 		<div class="list">
-			<h2 class="title">动漫</h2>
+			<div class="title-bar">
+				<h2 class="title">动漫</h2>
+				<!-- <a class="switch-button" data-list-type="dongman"><img src="./images/more_2.png" />换一批</a> -->
+				<a class="more" href="./list/?dongman.html">更多<img src="./images/more_1.png" /></a>
+			</div>
 			<div class="items" id="dongmanList">
 				<div class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></div>
-			</div>
-			<div class="more">
-				<a href="./list/?dongman.html"><img src="./images/more_1.png" />更多动漫</a>
-				<!-- <a class="switch-button" data-list-type="dongman"><img src="./images/more_2.png" />换一批</a> -->
 			</div>
 		</div>
 		<div class="copyright">

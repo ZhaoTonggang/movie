@@ -7,12 +7,15 @@ post('block').then(datas => {
 		let bdata = '',
 			adata = '';
 		const len = datas.length;
+		const imgUrls = [];
 		for (let i = 0; i < len; i++) {
+			const imgUrl = datas[i].pic_lists[0].url;
 			bdata += '<li class="item"><a href="./play/?' + btoa(encodeURI(datas[i].cat + '&' + datas[i]
-					.ent_id)) + '.html"><img src="' + datas[i].pic_lists[0].url +
+					.ent_id)) + '.html"><img src="' + imgUrl +
 				'" onerror="noimg(event)" alt="' + datas[i].title + '" loading="lazy" /><span>' + datas[i]
 				.title + '</span></a></li>';
 			adata += '<li class="circle"></li>';
+			imgUrls.push(imgUrl);
 		}
 		document.getElementById('item').innerHTML = bdata;
 		document.getElementById('circle').innerHTML = adata;
@@ -26,6 +29,8 @@ post('block').then(datas => {
 					if (i == e) {
 						items[e].className = "item active";
 						circles[e].className = "circle white";
+						// 应用模糊背景图到body
+						document.body.style.backgroundImage = `url('${imgUrls[e]}')`;
 					} else {
 						items[i].className = "item";
 						circles[i].className = "circle";
@@ -150,5 +155,75 @@ Promise.all([
 			db.close();
 			console.debug("数据库已关闭");
 		}
+	}
+})();
+// 开始 Service Worker
+(async () => {
+	// 浏览器兼容性检测
+	if (!('serviceWorker' in navigator)) {
+		console.log('❌ 当前浏览器不支持 Service Worker');
+		return;
+	}
+	try {
+		// 监听SW发送的消息
+		navigator.serviceWorker.addEventListener('message', (event) => {
+			if (!event.data) return;
+			// 缓存更新完成通知
+			if (event.data.type === 'CACHE_UPDATED') console.log('✨ PWA缓存已更新为版本:', event.data.version);
+			// 缓存状态提示（命中/离线）
+			if (event.data.type === 'CACHE_STATUS') {
+				const {
+					status,
+					version
+				} = event.data, el = document.getElementById('Status');
+				if (!el) return;
+				const [message, color] = status === 'HIT' ? ['使用缓存加载', '#4caf50'] : 'MISS' ? [
+					'正在缓存资源', '#60b5ff'
+				] : ['离线模式', '#ff9800'];
+				el.style.backgroundColor = color;
+				el.textContent = message;
+				console.log(message + '，当前数据版本:' + version);
+				el.style.display = 'block';
+				setTimeout(() => el.style.display = 'none', 5000);
+			}
+		});
+		// 新SW激活后自动刷新页面
+		navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+		// 版本更新提示函数
+		const showUpdatePrompt = (worker) => {
+			alert('🟢 检测到云端数据差异：\n🎉 有新版数据可用，程序即将自动重启！');
+			try {
+				worker.postMessage('SKIP_WAITING');
+			} catch (err) {
+				console.error('❌ 发送更新消息失败:', err);
+				window.location.reload();
+			}
+		};
+		// 注册Service Worker
+		const registration = await navigator.serviceWorker.register('./sw.js', {
+			updateViaCache: 'none'
+		});
+		console.log('✅ Service Worker 注册成功:', registration.scope);
+		// 处理已存在的待激活版本
+		if (registration.waiting) {
+			console.log('🎉 已有新版本等待激活！');
+			showUpdatePrompt(registration.waiting);
+		}
+		// 监听新版本发现
+		registration.addEventListener('updatefound', () => {
+			const newWorker = registration.installing;
+			console.log('🔄 发现新版本！');
+			newWorker.addEventListener('statechange', () => {
+				if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+					console.log('🎉 新版本已准备好！');
+					showUpdatePrompt(newWorker);
+				}
+			}, {
+				once: true
+			});
+		});
+		return registration;
+	} catch (error) {
+		console.log('❌ Service Worker 注册失败:', error);
 	}
 })();

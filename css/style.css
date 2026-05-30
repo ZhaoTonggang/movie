@@ -17,7 +17,7 @@ body {
 	margin: 0.3rem;
 	color: #333;
 	background: #FFF;
-	font-size: .4rem
+	font-size: .4rem;
 }
 
 h1,
@@ -387,28 +387,8 @@ input::-ms-input-placeholder {
 	font-weight: bold;
 	color: #333;
 	border-left: 0.3rem solid #FB7299;
-	margin: 0.5rem 0;
+	margin: 0;
 	padding-left: 0.5rem;
-}
-
-.list .title a {
-	display: block;
-	position: absolute;
-	right: 0.3rem;
-	top: 0;
-	height: 2.2rem;
-	line-height: 2.2rem;
-	font-size: 0.4rem;
-	color: #606060;
-	padding-right: 0.6rem;
-	font-weight: normal;
-	background: url('../images/more_1.png') no-repeat right center;
-	background-size: 0.5rem 0.5rem
-}
-
-.list .title span {
-	position: relative;
-	z-index: 9
 }
 
 .list .items {
@@ -463,45 +443,41 @@ input::-ms-input-placeholder {
 	margin-top: 0.1rem;
 }
 
-.list .more {
+.list .title-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	margin: 0.5rem 0;
-	text-align: center;
 }
 
-.list .more a {
+.title-bar .more {
 	display: inline-block;
-	width: 6.8rem;
-	height: 0.6rem;
-	line-height: 0.6rem;
-	text-align: center;
-	border-radius: 0.1rem;
+	line-height: 1;
 	color: #FB7299;
-	font-size: 0.52rem
+	font-size: 0.52rem;
 }
 
-.list .more a img {
+.title-bar .more img {
 	width: 0.55rem;
 	height: 0.55rem;
 	position: relative;
 	top: 0.1rem;
-	margin-left: 0.2rem;
-	margin-right: 0.2rem
 }
 
-.list .more a:first-child {
+.title-bar .more a:first-child {
 	/* margin-right: 0.4rem */
 }
 
-.list .more.one a {
+.title-bar .more.one a {
 	width: 13.6rem;
 	margin-right: 0
 }
 
-.list .more a.prev img {
+.title-bar .more a.prev img {
 	transform: rotate(90deg)
 }
 
-.list .more a.next img {
+.title-bar .more a.next img {
 	transform: rotate(-90deg);
 	margin-left: 0.2rem;
 	margin-right: 0
@@ -535,6 +511,42 @@ input::-ms-input-placeholder {
 	background: #FFF url('../images/arrow-top.png') no-repeat center;
 	background-size: 1rem 1rem;
 	box-shadow: 0 0 0.3rem 0 rgba(0, 0, 0, 0.15)
+}
+
+/* 状态通知 */
+@keyframes fadeInOut {
+	0% {
+		opacity: 0;
+		transform: translateX(20px);
+	}
+
+	20% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	80% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(20px);
+	}
+}
+
+#Status {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	color: #fff;
+	padding: 8px;
+	border-radius: 4px;
+	font-family: Arial, sans-serif;
+	font-size: 18px;
+	z-index: 99;
+	animation: fadeInOut 5s ease-in-out forwards;
 }
 
 /* 竖屏 */

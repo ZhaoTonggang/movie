@@ -24,6 +24,50 @@ input[type='radio']:checked+label {
 	position: relative;
 }
 
+.list .more {
+	margin: 0.5rem 0;
+	text-align: center;
+}
+
+.list .more a {
+	display: inline-block;
+	width: 6.8rem;
+	height: 0.6rem;
+	line-height: 0.6rem;
+	text-align: center;
+	border-radius: 0.1rem;
+	color: #FB7299;
+	font-size: 0.52rem
+}
+
+.list .more a img {
+	width: 0.55rem;
+	height: 0.55rem;
+	position: relative;
+	top: 0.1rem;
+	margin-left: 0.2rem;
+	margin-right: 0.2rem
+}
+
+.list .more a:first-child {
+	/* margin-right: 0.4rem */
+}
+
+.list .more.one a {
+	width: 13.6rem;
+	margin-right: 0
+}
+
+.list .more a.prev img {
+	transform: rotate(90deg)
+}
+
+.list .more a.next img {
+	transform: rotate(-90deg);
+	margin-left: 0.2rem;
+	margin-right: 0
+}
+
 @media screen and (orientation: portrait) {
 	.condition .s-slide-menu {
 		font-size: 0.7rem;
