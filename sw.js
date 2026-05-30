@@ -1,6 +1,6 @@
 'use strict';
 // 版本
-const Ver = 1779046201,
+const Ver = 1780127437,
 	cName = 'PWA-';
 // 安装：缓存资源 + 立即激活
 self.addEventListener('install', e => {
@@ -8,43 +8,43 @@ self.addEventListener('install', e => {
 		try {
 			// 打开缓存并缓存所有资源
 			await (await caches.open(cName + Ver)).addAll([
-				'./',
-				'./404.html',
-				'./ads/index.html',
-				'./css/index.css',
-				'./css/list.css',
-				'./css/play.css',
-				'./css/search.css',
-				'./css/style.css',
-				'./images/arrow-top.png',
-				'./images/icons/a128.png',
-				'./images/icons/a144.png',
-				'./images/icons/a152.png',
-				'./images/icons/a16.png',
-				'./images/icons/a192.png',
-				'./images/icons/a384.png',
-				'./images/icons/a512.png',
-				'./images/icons/a72.png',
-				'./images/icons/a96.png',
-				'./images/logo.png',
-				'./images/more_1.png',
-				'./images/more_2.png',
-				'./images/more.png',
-				'./images/new.gif',
-				'./images/search.png',
-				'./images/tip_close.png',
-				'./index.html',
-				'./js/fetch.js',
-				'./js/index.js',
-				'./js/initdb.js',
-				'./js/list.js',
-				'./js/play.js',
-				'./js/search.js',
-				'./list/index.html',
-				'./manifest.json',
-				'./play/index.html',
-				'./search/index.html'
-			]);
+			'./',
+			'./404.html',
+			'./ads/index.html',
+			'./css/index.css',
+			'./css/list.css',
+			'./css/play.css',
+			'./css/search.css',
+			'./css/style.css',
+			'./icons/128.png',
+			'./icons/144.png',
+			'./icons/152.png',
+			'./icons/16.png',
+			'./icons/192.png',
+			'./icons/384.png',
+			'./icons/512.png',
+			'./icons/72.png',
+			'./icons/96.png',
+			'./images/arrow-top.png',
+			'./images/logo.png',
+			'./images/more_1.png',
+			'./images/more_2.png',
+			'./images/more.png',
+			'./images/new.gif',
+			'./images/search.png',
+			'./images/tip_close.png',
+			'./index.html',
+			'./js/fetch.js',
+			'./js/index.js',
+			'./js/initdb.js',
+			'./js/list.js',
+			'./js/play.js',
+			'./js/search.js',
+			'./list/index.html',
+			'./manifest.json',
+			'./play/index.html',
+			'./search/index.html'
+		]);
 			// 跳过等待，直接激活新SW
 			await self.skipWaiting();
 		} catch (error) {
