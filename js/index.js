@@ -23,6 +23,10 @@ post('block').then(datas => {
 			circles = document.getElementById('circle').children,
 			rightBtn = document.getElementById("btn-right"),
 			lunbo = document.getElementById('lunbo'),
+			timeIndicator = document.getElementById('time-indicator'),
+			timeProgress = timeIndicator.querySelector('.time-progress'),
+			timeText = timeIndicator.querySelector('.time-text'),
+			SLIDE_DURATION = 3000,
 			/*展示轮播图*/
 			move = (e) => {
 				for (let i = 0; i < len; i++) {
@@ -37,10 +41,40 @@ post('block').then(datas => {
 						circles[i].setAttribute("num", i);
 					}
 				}
-
-			}
+				// 切换动画方向
+				isReverse = !isReverse;
+				// 重置时间指示器
+				resetTimeIndicator();
+			},
+			// 重置时间指示器
+			resetTimeIndicator = () => {
+				remainingTime = SLIDE_DURATION;
+				updateTimeIndicator();
+			},
+			// 更新时间指示器
+			updateTimeIndicator = () => {
+				// 确保时间不会为负数
+				const safeRemainingTime = Math.max(0, remainingTime);
+				let progress;
+				if (isReverse) {
+					// 反向动画：线条增加（从0到100）
+					progress = (safeRemainingTime / SLIDE_DURATION) * 100;
+				} else {
+					// 正向动画：线条减少（从100到0）
+					progress = (1 - safeRemainingTime / SLIDE_DURATION) * 100;
+				}
+				timeProgress.style.strokeDashoffset = progress;
+				// 倒计时结束后直接显示3，不显示0
+				const displayTime = safeRemainingTime <= 0 ? SLIDE_DURATION / 1000 : Math.ceil(
+					safeRemainingTime / 1000);
+				timeText.textContent = displayTime;
+			};
 		let index = 0,
-			timer = null;
+			timer = null,
+			timeTimer = null,
+			remainingTime = SLIDE_DURATION,
+			isPaused = false,
+			isReverse = false; // 标记是否为反向动画（线条增加）
 		//点击右边按钮切换下一张图片
 		rightBtn.onclick = () => {
 			index = (index + 1) % len;
@@ -52,9 +86,19 @@ post('block').then(datas => {
 			move(index);
 		};
 		//开始定时器，点击右边按钮，实现轮播
-		timer = setInterval(() => {
-			rightBtn.onclick();
-		}, 3000)
+		const startAutoSlide = () => {
+			timer = setInterval(() => {
+				rightBtn.onclick();
+			}, SLIDE_DURATION);
+			// 开始时间进度动画
+			timeTimer = setInterval(() => {
+				if (!isPaused) {
+					remainingTime -= 100;
+					updateTimeIndicator();
+				}
+			}, 100);
+		};
+		startAutoSlide();
 		//点击圆点时，跳转到对应图片
 		for (let i = 0; i < len; i++) {
 			circles[i].onclick = function() {
@@ -65,13 +109,15 @@ post('block').then(datas => {
 		//鼠标移入清除定时器，并开启一个三秒的定时器，使慢慢转动
 		lunbo.onmouseover = () => {
 			clearInterval(timer);
+			clearInterval(timeTimer);
+			isPaused = true;
 		}
 		//鼠标移出又开启定时器
 		lunbo.onmouseleave = () => {
 			clearInterval(timer);
-			timer = setInterval(() => {
-				rightBtn.onclick();
-			}, 3000)
+			clearInterval(timeTimer);
+			isPaused = false;
+			startAutoSlide();
 		}
 		//初始化轮播图，使页面加载完成后立即显示第一张图片和对应的圆点状态
 		move(index);
@@ -97,9 +143,8 @@ const list = (j, id) => { // 获取首页数据
 			}
 		}).catch(e => console.error('[404]错误日志：', e))
 	},
-	endtip = () => { // 关闭声明
-		document.getElementById('tip').style.display = 'none';
-	}
+	// 关闭声明
+	endtip = () => document.getElementById('tip').style.display = 'none';
 // 并行发起所有请求
 Promise.all([
 	list(1, 'tuijianList'),
@@ -110,8 +155,8 @@ Promise.all([
 ]).catch(e => {
 	console.error('并行请求异常：', e);
 });
-// 获取最近观看
 (async () => {
+	// 获取最近观看
 	try {
 		// 打开数据库
 		db = await openDatabase();
@@ -156,74 +201,72 @@ Promise.all([
 			console.debug("数据库已关闭");
 		}
 	}
-})();
-// 开始 Service Worker
-(async () => {
-	// 浏览器兼容性检测
-	if (!('serviceWorker' in navigator)) {
-		console.log('❌ 当前浏览器不支持 Service Worker');
-		return;
-	}
-	try {
-		// 监听SW发送的消息
-		navigator.serviceWorker.addEventListener('message', (event) => {
-			if (!event.data) return;
-			// 缓存更新完成通知
-			if (event.data.type === 'CACHE_UPDATED') console.log('✨ PWA缓存已更新为版本:', event.data.version);
-			// 缓存状态提示（命中/离线）
-			if (event.data.type === 'CACHE_STATUS') {
-				const {
-					status,
-					version
-				} = event.data, el = document.getElementById('Status');
-				if (!el) return;
-				const [message, color] = status === 'HIT' ? ['使用缓存加载', '#4caf50'] : 'MISS' ? [
-					'正在缓存资源', '#60b5ff'
-				] : ['离线模式', '#ff9800'];
-				el.style.backgroundColor = color;
-				el.textContent = message;
-				console.log(message + '，当前数据版本:' + version);
-				el.style.display = 'block';
-				setTimeout(() => el.style.display = 'none', 5000);
-			}
-		});
-		// 新SW激活后自动刷新页面
-		navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
-		// 版本更新提示函数
-		const showUpdatePrompt = (worker) => {
-			alert('🟢 检测到云端数据差异：\n🎉 有新版数据可用，程序即将自动重启！');
-			try {
-				worker.postMessage('SKIP_WAITING');
-			} catch (err) {
-				console.error('❌ 发送更新消息失败:', err);
-				window.location.reload();
-			}
-		};
-		// 注册Service Worker
-		const registration = await navigator.serviceWorker.register('./sw.js', {
-			updateViaCache: 'none'
-		});
-		console.log('✅ Service Worker 注册成功:', registration.scope);
-		// 处理已存在的待激活版本
-		if (registration.waiting) {
-			console.log('🎉 已有新版本等待激活！');
-			showUpdatePrompt(registration.waiting);
-		}
-		// 监听新版本发现
-		registration.addEventListener('updatefound', () => {
-			const newWorker = registration.installing;
-			console.log('🔄 发现新版本！');
-			newWorker.addEventListener('statechange', () => {
-				if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-					console.log('🎉 新版本已准备好！');
-					showUpdatePrompt(newWorker);
+	// 开始 Service Worker
+	if ('serviceWorker' in navigator) {
+		try {
+			// 监听SW发送的消息
+			navigator.serviceWorker.addEventListener('message', (event) => {
+				if (!event.data) return;
+				// 缓存更新完成通知
+				if (event.data.type === 'CACHE_UPDATED') console.log('✨ PWA缓存已更新为版本:', event.data
+					.version);
+				// 缓存状态提示（命中/离线）
+				if (event.data.type === 'CACHE_STATUS') {
+					const {
+						status,
+						version
+					} = event.data, el = document.getElementById('Status');
+					if (!el) return;
+					const [message, color] = status === 'HIT' ? ['使用缓存加载', '#4caf50'] : 'MISS' ? [
+						'正在缓存资源', '#60b5ff'
+					] : ['离线模式', '#ff9800'];
+					el.style.backgroundColor = color;
+					el.textContent = message;
+					console.log(message + '，当前数据版本:' + version);
+					el.style.display = 'block';
+					setTimeout(() => el.style.display = 'none', 5000);
 				}
-			}, {
-				once: true
 			});
-		});
-		return registration;
-	} catch (error) {
-		console.log('❌ Service Worker 注册失败:', error);
+			// 新SW激活后自动刷新页面
+			navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+			// 版本更新提示函数
+			const showUpdatePrompt = (worker) => {
+				alert('🟢 检测到云端数据差异：\n🎉 有新版数据可用，程序即将自动重启！');
+				try {
+					worker.postMessage('SKIP_WAITING');
+				} catch (err) {
+					console.error('❌ 发送更新消息失败:', err);
+					window.location.reload();
+				}
+			};
+			// 注册Service Worker
+			const registration = await navigator.serviceWorker.register('./sw.js', {
+				updateViaCache: 'none'
+			});
+			console.log('✅ Service Worker 注册成功:', registration.scope);
+			// 处理已存在的待激活版本
+			if (registration.waiting) {
+				console.log('🎉 已有新版本等待激活！');
+				showUpdatePrompt(registration.waiting);
+			}
+			// 监听新版本发现
+			registration.addEventListener('updatefound', () => {
+				const newWorker = registration.installing;
+				console.log('🔄 发现新版本！');
+				newWorker.addEventListener('statechange', () => {
+					if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+						console.log('🎉 新版本已准备好！');
+						showUpdatePrompt(newWorker);
+					}
+				}, {
+					once: true
+				});
+			});
+			return registration;
+		} catch (error) {
+			console.log('❌ Service Worker 注册失败:', error);
+		}
+	} else {
+		console.log('❌ 当前浏览器不支持 Service Worker');
 	}
 })();

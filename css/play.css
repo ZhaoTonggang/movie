@@ -74,7 +74,10 @@ input[type='radio']:checked+label,
 	justify-content: space-around;
 }
 
-.episodes-title {
+.from .title,
+.episodes-title,
+.guess-title,
+#itemList .title {
 	position: relative;
 	color: #333;
 	font-weight: bold;

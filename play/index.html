@@ -9,6 +9,14 @@
 		<title>数据填充中 - 风影阁</title>
 		<meta name="keywords" content="最新电影,好看电视剧,热门综艺,优秀动漫" />
 		<meta name="description" content="一站式视频聚合库，在线免费试看！" />
+		<!-- Meta Tags -->
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="风影阁" />
+		<meta name="mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="theme-color" content="#ffe4c4" />
+		<meta name="msapplication-TileColor" content="#ffe4c4" />
 		<!--网站图标配置-->
 		<link rel="apple-touch-icon" sizes="192x192" href="../images/icons/192.png" />
 		<link rel="shortcut icon" type="image/png" sizes="16x16" href="../images/icons/a16.png" />
@@ -36,7 +44,7 @@
 				<a href="../list/?dianshi.html">电视剧</a>
 				<a href="../list/?zongyi.html">综艺</a>
 				<a href="../list/?dongman.html">动漫</a>
-				<!-- <a href="./?jiexi.html">解析</a> -->
+				<a href="../jiexi/">解析</a>
 			</div>
 			<div class="search">
 				<a id="searchDo" onclick="so()"></a>
@@ -44,11 +52,13 @@
 			</div>
 		</div>
 		<h1 class="from-title" id="titleItem"><b>正在放映:</b></h1>
-		<iframe allow="fullscreen;autoplay" sandbox="allow-scripts allow-same-origin" id="play" src="../ads/"></iframe>
+		<iframe id="play" allow="fullscreen;autoplay" sandbox="allow-scripts allow-same-origin" loading='lazy'
+			src="../ads/">
+			<h1>抱歉，您的浏览器可能不支持此框架！</h1>
+		</iframe>
 		<div class="info">
 			<p style="color:#ff0000;">请在下选择线路或剧集后开始播放，若无法播放请切换线路</p>
-			<p style="color:#009036;">受缓存影响，数据更新有延迟，如需实时内容，可前往<a target="_blank"
-					href="https://show.heheda.top">风影阁解析</a></p>
+			<p style="color:#009036;">受缓存影响，数据更新有延迟，如需实时内容，可前往<a href="../jiexi/">风影阁解析</a></p>
 		</div>
 		<div class="from" id="siteList">
 			<h2 class="title">视频平台</h2>
@@ -85,7 +95,7 @@
 			<div class="desc" id='mddiv'><b>简介：</b></div>
 		</div>
 		<div class="list">
-			<h2 class="title">猜你喜欢</h2>
+			<h2 class="guess-title">猜你喜欢</h2>
 			<div class="items" id="guessList">
 				<div class="s-loading"><i class="first"></i><i class="second"></i><i class="third"></i></div>
 			</div>

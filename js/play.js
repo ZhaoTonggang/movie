@@ -4,9 +4,7 @@
 let dataInfo = {};
 const urldata = window.location.href,
 	arr = (e, y) => { // 处理数组
-		if (y) {
-			return e[0];
-		}
+		if (y) return e[0];
 		let arre = '';
 		const len = e.length;
 		for (let i = 0; i < len; i++) {
@@ -15,132 +13,145 @@ const urldata = window.location.href,
 		return arre;
 	},
 	putDB = async (id, tit, img) => { // 写入最近观看
-		if (!id || !tit || !img) {
-			console.error("写入数据为空！");
-			return false;
-		}
-		try {
-			// 打开数据库
-			db = await openDatabase();
-			// 执行数据写入操作
-			return await new Promise((resolve, reject) => {
-				const transaction = db.transaction([storeName], "readwrite"),
-					request = transaction.objectStore(storeName).put({
-						play: id.trim(),
-						title: tit.trim(),
-						img: img.trim(),
-						time: new Date().getTime()
-					});
-				request.onsuccess = () => {
-					console.log("数据写入成功！");
-					resolve(true);
-				};
-				request.onerror = (e) => {
-					const error = new Error("数据写入出错: " + e.target.error);
-					console.error("操作失败:", error);
-					reject(error);
-				};
-				// 事务完成处理
-				transaction.oncomplete = () => console.debug("事务完成");
-				transaction.onerror = (e) => console.error("事务出错:", e.target.error);
-			});
-		} catch (error) {
-			console.error("操作失败:", error);
-			return false;
-		} finally {
-			// 关闭数据库
-			if (db) {
-				db.close();
-				console.debug("数据库已关闭");
+			if (!id || !tit || !img) {
+				console.error("写入数据为空！");
+				return false;
 			}
-		}
-	}, juji = async (c, a, t, s) => { // 剧集
-		let start = 1,
-			jjdata = '',
-			ts = 1;
-		if (t && t > 0) {
-			ts = t > 200 ? Math.ceil(t / 200) : 1
-		} else {
-			return alert('获取剧集失败！');
-		}
-		for (let i = 1; i <= ts; i++) {
-			let end = t < 200 * i ? t : 200 * i;
-			await post('detail', 'cat=' + c + '&id=' + a + '&start=' + start + '&end=' + end + '&site=' + s)
-				.then(
-					datas => {
+			try {
+				// 打开数据库
+				db = await openDatabase();
+				// 执行数据写入操作
+				return await new Promise((resolve, reject) => {
+					const transaction = db.transaction([storeName], "readwrite"),
+						request = transaction.objectStore(storeName).put({
+							play: id.trim(),
+							title: tit.trim(),
+							img: img.trim(),
+							time: new Date().getTime()
+						});
+					request.onsuccess = () => {
+						console.log("数据写入成功！");
+						resolve(true);
+					};
+					request.onerror = (e) => {
+						const error = new Error("数据写入出错: " + e.target.error);
+						console.error("操作失败:", error);
+						reject(error);
+					};
+					// 事务完成处理
+					transaction.oncomplete = () => console.debug("事务完成");
+					transaction.onerror = (e) => console.error("事务出错:", e.target.error);
+				});
+			} catch (error) {
+				console.error("操作失败:", error);
+				return false;
+			} finally {
+				// 关闭数据库
+				if (db) {
+					db.close();
+					console.debug("数据库已关闭");
+				}
+			}
+		},
+		fetchEpisodeList = async (config) => {
+				const {
+					buildParams,
+					extractData,
+					generateLabel,
+					loopCount,
+					site
+				} = config;
+				let html = '';
+				let hasError = false;
+				for (let i = 0; i < loopCount; i++) {
+					const params = buildParams(i);
+					await post('detail', params).then(datas => {
 						if (datas.code == 1) {
-							datas = datas.data.allepidetail[s];
-							const len = datas.length;
+							const episodes = extractData(datas.data, site);
+							const len = episodes.length;
 							for (let d = 0; d < len; d++) {
-								jjdata += '<input type="radio" name="sjj" value="' + datas[d].url + '"id="' +
-									i +
-									'-' + d + '" onclick="getlist()"/><label for="' + i + '-' + d + '">第' +
-									datas[d].playlink_num + '集</label>';
+								html += '<input type="radio" name="sjj" value="' + episodes[d].url + '"id="' +
+									i + '-' + d + '" onclick="getlist()"/><label for="' + i + '-' + d + '">' +
+									generateLabel(episodes[d]) + '</label>';
 							}
 						} else {
-							jjdata = '<div class="no-data">无法获取剧集列表，请尝试切换平台</div>';
+							html = '<div class="no-data">无法获取剧集列表，请尝试切换平台</div>';
+							hasError = true;
 						}
 					}).catch(e => console.error('[404]错误日志：', e));
-			start = end + 1;
-		}
-		document.getElementById('episodesList').innerHTML = jjdata;
-	}, zyjuji = async (c, a, n, s) => { // 综艺类剧集
-		n = Object.keys(n);
-		let zydata = '';
-		const len = n.length;
-		for (let j = 0; j < len; j++) {
-			await post('detail', 'cat=' + c + '&id=' + a + '&year=' + n[j] + '&site=' + s).then(datas => {
-				if (datas.code == 1) {
-					datas = datas.data.defaultepisode;
-					const len = datas.length;
-					for (let i = 0; i < len; i++) {
-						zydata += '<input type="radio" name="sjj" value="' + datas[i].url +
-							'"id="' + j +
-							'-' + i + '" onclick="getlist()"/><label for="' + j + '-' + i + '">' +
-							datas[i]
-							.period + '</label>';
+
+					if (hasError) break;
+				}
+				document.getElementById('episodesList').innerHTML = html;
+			},
+			juji = async (c, a, t, s) => {
+					if (!t || t <= 0) return alert('获取剧集失败！');
+					const totalPages = t > 200 ? Math.ceil(t / 200) : 1;
+					await fetchEpisodeList({
+						loopCount: totalPages,
+						cat: c,
+						id: a,
+						site: s,
+						buildParams: (pageIndex) => {
+							const start = pageIndex * 200 + 1;
+							const end = Math.min((pageIndex + 1) * 200, t);
+							return 'cat=' + c + '&id=' + a + '&start=' + start + '&end=' + end + '&site=' +
+								s;
+						},
+						extractData: (data, site) => data.allepidetail[site],
+						generateLabel: (episode) => '第' + episode.playlink_num + '集'
+					});
+				},
+				zyjuji = async (c, a, n, s) => {
+						const years = Object.keys(n);
+						await fetchEpisodeList({
+							loopCount: years.length,
+							cat: c,
+							id: a,
+							site: s,
+							buildParams: (yearIndex) => 'cat=' + c + '&id=' + a + '&year=' + years[yearIndex] +
+								'&site=' + s,
+							extractData: (data) => data.defaultepisode,
+							generateLabel: (episode) => episode.period
+						});
+					},
+					guess = (c, a) => {
+						post('query', 'cat=' + c + '&act=' + a).then(datas => { // 猜你喜欢
+							if (datas.code == 1) {
+								datas = datas.data.movies;
+								let bdata = '';
+								const len = datas.length;
+								for (let i = 0; i < len; i++) {
+									let coverData = /https:\/\//i.test(datas[i].cdncover) ? datas[i].cdncover :
+										(
+											'https:' +
+											datas[i].cdncover);
+									bdata += '<a href="./?' + btoa(encodeURI(c + '&' + datas[i].id)) +
+										'.html"><img src="' +
+										coverData + '" onerror="noimg(event)" alt="' + datas[i].title +
+										'" loading="lazy" /><p>' +
+										datas[i]
+										.title + '</p></a>';
+								}
+								document.getElementById('guessList').innerHTML = bdata;
+							} else {
+								alert('网络错误！');
+							}
+						}).catch(e => console.error('[404]错误日志：', e))
+					}, getvl = (a) => { // value值遍历器
+						const avl = document.getElementsByName(a),
+							len = avl.length;
+						for (let i = 0; i < len; i++) {
+							if (avl[i].checked) {
+								return avl[i].value;
+							}
+						}
+					}, getlist = () => { // 播放
+						document.getElementById('play').src = decodeURI(atob(getvl('sjx'))) + ((dataInfo[0] != 1) ?
+							getvl(
+								'sjj') :
+							getvl('sti'));
 					}
-				} else {
-					zydata = '<div class="no-data">无法获取剧集列表，请尝试切换平台</div>';
-				}
-			}).catch(e => console.error('[404]错误日志：', e));
-		}
-		document.getElementById('episodesList').innerHTML = zydata;
-	}, guess = (c, a) => {
-		post('query', 'cat=' + c + '&act=' + a).then(datas => { // 猜你喜欢
-			if (datas.code == 1) {
-				datas = datas.data.movies;
-				let bdata = '';
-				const len = datas.length;
-				for (let i = 0; i < len; i++) {
-					let coverData = /https:\/\//i.test(datas[i].cdncover) ? datas[i].cdncover : (
-						'https:' +
-						datas[i].cdncover);
-					bdata += '<a href="./?' + btoa(encodeURI(c + '&' + datas[i].id)) +
-						'.html"><img src="' +
-						coverData + '" onerror="noimg(event)" alt="' + datas[i].title +
-						'" loading="lazy" /><p>' +
-						datas[i]
-						.title + '</p></a>';
-				}
-				document.getElementById('guessList').innerHTML = bdata;
-			} else {
-				alert('网络错误！');
-			}
-		}).catch(e => console.error('[404]错误日志：', e))
-	}, getvl = (a) => { // value值遍历器
-		const avl = document.getElementsByName(a),
-			len = avl.length;
-		for (let i = 0; i < len; i++) {
-			if (avl[i].checked) {
-				return avl[i].value;
-			}
-		}
-	}, getlist = () => { // 播放
-		document.getElementById('play').src = decodeURI(atob(getvl('sjx'))) + ((dataInfo[0] != 1) ? getvl(
-				'sjj') :
-			getvl('sti'));
-	}
 // 初始化
 if (window.top != window) {
 	alert('当您看到这条提示意味着：您所访问的网站正在恶意调用本站资源，本站对偷盗资源的行为0容忍，点击确认跳转正版体验。');
@@ -221,7 +232,7 @@ if (window.top != window) {
 			}
 			document.getElementById('stList').innerHTML = stvalue;
 			// 解析线路
-			const len = jiexi.length
+			const len = jiexi.length;
 			for (let a = 0; a < len; a++) {
 				let cjch = (a == Object.keys(jiexi)[0]) ? 'checked' : '';
 				jxvalue += '<input ' + cjch + ' type="radio" name="sjx" value="' + jiexi[a] + '"id="' + a +

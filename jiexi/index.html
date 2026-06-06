@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<title>风影阁解析 - 免费VIP视频解析平台</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="keywords"
+			content="风影阁,vip视频解析,vip视频在线解析,vip解析,万能vip视频解析,vip视频全能解析,vip视频,手机vip视频解析,手机在线解析vip视频,优酷vip解析,爱奇艺vip解析,腾讯vip解析,乐视vip解析,芒果vip解析,vip音乐解析" />
+		<meta name="description"
+			content="风影阁,VIP视频免费看，在线解析，vip视频解析，优酷vip解析，爱奇艺vip解析，腾讯vip解析，乐视vip解析，全网影视vip，芒果vip解析方便广大用户VIP视频服务，最新电影最新电视剧在线免费观看" />
+		<!-- Meta Tags -->
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="风影阁" />
+		<meta name="mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="theme-color" content="#ffe4c4" />
+		<meta name="msapplication-TileColor" content="#ffe4c4" />
+		<!--网站图标配置-->
+		<link rel="apple-touch-icon" sizes="192x192" href="../images/icons/192.png" />
+		<link rel="shortcut icon" type="image/png" sizes="16x16" href="../images/icons/a16.png" />
+		<link rel="icon" type="image/png" sizes="72x72" href="../images/icons/a72.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="../images/icons/a96.png" />
+		<link rel="icon" type="image/png" sizes="128x128" href="../images/icons/a128.png" />
+		<link rel="icon" type="image/png" sizes="144x144" href="../images/icons/a144.png" />
+		<link rel="icon" type="image/png" sizes="152x152" href="../images/icons/a152.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="../images/icons/a192.png" />
+		<link rel="icon" type="image/png" sizes="384x384" href="../images/icons/a384.png" />
+		<link rel="icon" type="image/png" sizes="512x512" href="../images/icons/a512.png" />
+		<!-- 核心样式框架 -->
+		<link rel="stylesheet" type="text/css" href="../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../css/jiexi.css" />
+		<!--PWA配置-->
+		<link rel="manifest" href="../manifest.json" />
+	</head>
+	<body>
+		<div class="header">
+			<a class="logo" href="./">
+				<h1>风影阁<span>•解析</span></h1>
+			</a>
+			<div class="navigate">
+				<a href="../">精选</a>
+				<a href="../list/?dianying.html" id="dianying">电影</a>
+				<a href="../list/?dianshi.html" id="dianshi">电视剧</a>
+				<a href="../list/?zongyi.html" id="zongyi">综艺</a>
+				<a href="../list/?dongman.html" id="dongman">动漫</a>
+				<a href="./" class="current">解析</a>
+			</div>
+			<div class="search">
+				<a id="searchDo" onclick="so()"></a>
+				<input type="search" maxlength="10" placeholder="输入你想看的" id="search" autocomplete="on" />
+			</div>
+		</div>
+		<div class="bgdiv">
+			<section>
+				<p>最稳定，更新最快的视频解析网站，免费看全网视频！</p>
+				<p>若出现播放异常，请刷新网页或更换解析线路后重试！</p>
+			</section>
+			<div id="kj">
+				<iframe title="视频播放器" id="player" class="player" allow="fullscreen;autoplay"
+					sandbox="allow-scripts allow-same-origin" loading='lazy' src="../ads/">
+					<h1>抱歉，您的浏览器可能不支持此框架！</h1>
+				</iframe>
+				<p id="hitokoto">(*゜ロ゜)ノ一言加载中...</p>
+			</div>
+			<div class="input-group">
+				<span class="span">视频地址</span>
+				<input class="control" type="search" placeholder="请输入链接地址或名称关键字" id="url" oninput="play(0)" />
+			</div>
+			<div class="input-group" id="cxl">
+				<span class="span">解析线路</span>
+				<select class="control" id="jk">
+					<option value="aHR0cHM6Ly9qeC54bWZsdi5jb20vP3VybD0=" selected>
+						线路〇</option>
+					<option value="aHR0cHM6Ly9qeC5wbGF5ZXJqeS5jb20vP3VybD0=">
+						线路壹</option>
+					<option value="aHR0cHM6Ly9kbWp4Lm0zdTgudHYvP3VybD0=">线路贰</option>
+					<option value="aHR0cHM6Ly9qeC5tM3U4LnR2L2ppZXhpLz91cmw9">线路叁</option>
+					<option value="aHR0cHM6Ly9qeC5haWRvdWVyLm5ldC8/dXJsPQ==">线路肆</option>
+				</select>
+			</div>
+			<button id="ksbf" type="button" class="btn" onclick="play(1)">#开始播放#</button>
+			<button id="ckbf" type="button" class="btn" onclick="play(2)">#窗口播放#</button>
+			<!-- <button id="subt" type="button" class="btn" onclick="sub(2)">#开始搜索#</button> -->
+			<!-- <button id="qpbf" type="button" class="btn"
+                    onclick="dihejk2()">#全屏放映#</button> -->
+			<!-- <button type="button" class="btn" onclick="demo()">#下载视频#</button> -->
+			<button id="fxbz" type="button" class="btn" onclick="othbts()">#分享本站#</button>
+			<a class="btna" target="_blank"
+				href="https://openai.weixin.qq.com/webapp/NlFdeGGV6J4GfwxPImLX9mxGXzkSHg?robotName=%E5%BD%B1%E8%A7%86%E8%A7%A3%E6%9E%90">
+				#故障反馈#</a>
+			<a class="btna" target="_blank" href="../ads/">
+				#广告服务#</a>
+			<button id="zzbz" type="button" class="btn" onclick="othbta()">#赞助本站#</button>
+			<table>
+				<tr>
+					<td>
+						<h2>快速访问:</h2>
+						<div class="language">
+							<a class="btn2" href="https://www.iqiyi.com/" target="_blank">爱奇艺</a>
+							<a class="btn2" href="https://v.qq.com/" target="_blank">腾讯视频</a>
+							<a class="btn2" href="https://www.mgtv.com/" target="_blank">芒果TV</a>
+							<a class="btn2" href="https://www.youku.com/" target="_blank">优酷视频</a>
+							<a class="btn2" href="https://www.1905.com/" target="_blank">M1905</a>
+							<a class="btn2" href="https://www.ixigua.com/" target="_blank">西瓜视频</a>
+							<a class="btn2" href="https://www.cctv.com/" target="_blank">CCTV</a>
+							<a class="btn2" href="https://www.le.com/" target="_blank">乐视视频</a>
+							<a class="btn2" href="https://tv.sohu.com/" target="_blank">搜狐视频</a>
+							<a class="btn2" href="https://www.pptv.com/" target="_blank">PPTV聚力</a>
+							<a class="btn2" href="https://www.bilibili.com/" target="_blank">哔哩哔哩</a>
+							<a class="btn2" href="https://www.migu.cn/" target="_blank">咪咕视频</a>
+							<a class="btn2" href="https://www.douyin.com/" target="_blank">抖音</a>
+							<a class="btn2" href="https://www.acfun.cn/" target="_blank">AcFun</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h2>使用说明:</h2>
+						<div class="language1">
+							<p>第&nbsp;1&nbsp;步：进入各大视频网站，找到想要观看的视频，然后复制链接（浏览器上的视频地址）。</p>
+							<p>第&nbsp;2&nbsp;步：将复制的链接粘贴到本站播放地址，并点击“#开始播放#”按钮。</p>
+							<p>第&nbsp;3&nbsp;步：等待解析完成，即可免费观看相应视频内容。</p>
+							<p class="tred">
+								注意：本站视频均来自第三方，请勿相信视频中出现的博彩广告，本站不对广告内容负责，如发现不当广告，请点击上方“#故障反馈#”进行投诉！</p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h2>窗口播放:</h2>
+						<div class="language">
+							<p>您可以通过此功能开启多线程播放模式，该功能允许您使用多个独立的窗口观看不同的内容！您可以自由的将每个窗口最小化或者最大化！</p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h2>知识产权:</h2>
+						<div class="language1">
+							<p>1.本站不存储任何影视资源，也不做商业运营，只提供影视检索服务</p>
+							<p>2.本站使用到的所有算法，均来自国外技术论坛以及Github开源社区</p>
+							<p>3.本站仅供互联网开发测试和学习交流，无实质性服务</p>
+						</div>
+						<a class="btna" target="_blank"
+							href="https://openai.weixin.qq.com/webapp/NlFdeGGV6J4GfwxPImLX9mxGXzkSHg?robotName=%E5%BD%B1%E8%A7%86%E8%A7%A3%E6%9E%90">#侵权投诉#</a>
+					</td>
+				</tr>
+				<!-- <tr>
+						<td>
+							<h2>下载APP:</h2>
+							<div class="language">
+								<p>本站已支持对应APP，您可以点击下方按钮下载体验！</p>
+								<p style="color: red;">注意：暂不支持IOS版本！</p>
+							</div>
+							<button type="button" onclick="othbut(3)"
+								class="btn">#下载APP#</button>
+						</td>
+					</tr> -->
+				<tr>
+					<td>
+						<h2>友情链接:</h2>
+						<div class="language">
+							<a target="_blank" class="btn2" title="赵彤刚的博客" href="https://blog.heheda.top/">赵彤刚的博客</a>
+							<a target="_blank" class="btn2" title="赵彤刚的工具箱" href="https://tool.heheda.top/">赵彤刚的工具箱</a>
+							<a target="_blank" class="btn2" title="赵彤刚的小屋" href="https://my.heheda.top/">赵彤刚的小屋</a>
+							<a target="_blank" class="btn2" title="赵彤刚的相册" href="https://photo.heheda.top/">赵彤刚的相册</a>
+							<a target="_blank" class="btn2" title="雅图轩" href="https://picture.heheda.top/">雅图轩</a>
+							<a target="_blank" class="btn2" title="云音乐API"
+								href="https://music-api.heheda.top/">云音乐API</a>
+							<a target="_blank" class="btn2" title="音乐解锁"
+								href="https://unlock-music.heheda.top/">音乐解锁</a>
+							<a target="_blank" class="btn2" title="在线畅玩小霸王" href="https://nes.heheda.top/">红白机游戏盒</a>
+							<a target="_blank" class="btn2" title="植物大战僵尸网页版" href="https://pvz.heheda.top/">植物大战僵尸</a>
+							<a target="_blank" class="btn2" title="短视频去水印" href="https://jiexi.heheda.top/">短视频去水印</a>
+							<a target="_blank" class="btn2" title="在线游戏盒" href="https://gamebox.heheda.top/">在线游戏盒</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="copyright">
+			<p>本站内容均来自于互联网资源实时采集</p>
+			<p>本网站仅用做学习交流</p>
+		</div>
+		<div id="cdtop" class="cdtopHid" onclick="cdTop2()" title="返回顶部">回到顶部</div>
+		<!-- 页面逻辑 -->
+		<script defer src="../js/jiexi.js"></script>
+		<!--一言API-->
+		<script defer src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto"></script>
+		<!-- 谷歌自动广告 -->
+		<script async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3670070169085381"
+			crossorigin="anonymous"></script>
+		<noscript>
+			<h1>本站功能实现依赖了大量JS，您的浏览器不支持或未启用JS！</h1>
+		</noscript>
+	</body>
+</html>
