@@ -162,9 +162,10 @@ if (window.top != window) {
 	// 获取详细信息
 	post('detail', 'cat=' + dataInfo[0] + '&id=' + dataInfo[1]).then(datas => {
 		if (datas.code == 1) {
-			const jiexi = ['aHR0cHM6Ly9qeC54bWZsdi5jb20vP3VybD0=', 'aHR0cHM6Ly9qeC5wbGF5ZXJqeS5jb20vP3VybD0=',
-				'aHR0cHM6Ly9kbWp4Lm0zdTgudHYvP3VybD0=', 'aHR0cHM6Ly9qeC5tM3U4LnR2L2ppZXhpLz91cmw9',
-				'aHR0cHM6Ly9qeC5haWRvdWVyLm5ldC8/dXJsPQ=='
+			const jiexi = ['aHR0cHM6Ly9qeC54bWZsdi5jb20vP3VybD0=',
+				'aHR0cHM6Ly9sbDktYmV0YS10b3MuMWxqeC5jb20vX3BsYXllci8/dXJsPQ==',
+				'aHR0cHM6Ly9zdXBlci5wbGF5ci50b3AvP3VybD0=', 'aHR0cHM6Ly9iZnEudHhucC5jbi9wbGF5ZXI/dXJsPQ==',
+				'aHR0cHM6Ly9qeC43N2Zsdi5jYy8/dXJsPQ=='
 			];
 			let jxvalue = '';
 			let stvalue = '';
