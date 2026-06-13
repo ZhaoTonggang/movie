@@ -1,6 +1,6 @@
 'use strict';
 // 版本
-const Ver = 1781388158,
+const Ver = 1781390995,
 	cName = 'PWA-',
 	postMess = (type, status) => {
 		setTimeout(async () => {
