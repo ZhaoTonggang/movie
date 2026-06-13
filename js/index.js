@@ -156,6 +156,76 @@ Promise.all([
 	console.error('并行请求异常：', e);
 });
 (async () => {
+	// 开始 Service Worker
+	if ('serviceWorker' in navigator) {
+		try {
+			// 监听SW发送的消息
+			navigator.serviceWorker.addEventListener('message', (event) => {
+				if (!event.data) return;
+				// 缓存更新完成通知
+				if (event.data.type === 'CACHE_UPDATED') console.log('✨ PWA缓存已更新为版本:', event.data
+					.version);
+				// 缓存状态提示（命中/离线）
+				if (event.data.type === 'CACHE_STATUS') {
+					const {
+						status,
+						version
+					} = event.data, el = document.getElementById('Status');
+					if (!el) return;
+					const [message, color] = status === 'HIT' ? ['使用缓存加载', '#4caf50'] : status ===
+						'MISS' ? ['正在缓存资源', '#60b5ff'] : ['离线模式', '#ff9800'];
+					el.style.backgroundColor = color;
+					el.textContent = message;
+					console.log(message + '，当前数据版本:' + version);
+					el.style.display = 'block';
+					setTimeout(() => el.style.display = 'none', 5000);
+				}
+			});
+			// 新SW激活后自动刷新页面
+			let isFirstInstall = true;
+			navigator.serviceWorker.addEventListener('controllerchange', () => {
+				if (!isFirstInstall) window.location.reload();
+				isFirstInstall = false;
+			});
+			// 版本更新提示函数
+			const showUpdatePrompt = (worker) => {
+				alert('🟢 检测到云端数据差异：\n🎉 有新版数据可用，程序即将自动重启！');
+				try {
+					worker.postMessage('SKIP_WAITING');
+				} catch (err) {
+					console.error('❌ 发送更新消息失败:', err);
+					window.location.reload();
+				}
+			};
+			// 注册Service Worker
+			const registration = await navigator.serviceWorker.register('./sw.js', {
+				updateViaCache: 'none'
+			});
+			console.log('✅ Service Worker 注册成功:', registration.scope);
+			// 处理已存在的待激活版本
+			if (registration.waiting) {
+				console.log('🎉 已有新版本等待激活！');
+				showUpdatePrompt(registration.waiting);
+			}
+			// 监听新版本发现
+			registration.addEventListener('updatefound', () => {
+				const newWorker = registration.installing;
+				console.log('🔄 发现新版本！');
+				newWorker.addEventListener('statechange', () => {
+					if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+						console.log('🎉 新版本已准备好！');
+						showUpdatePrompt(newWorker);
+					}
+				}, {
+					once: true
+				});
+			});
+		} catch (error) {
+			console.log('❌ Service Worker 注册失败:', error);
+		}
+	} else {
+		console.log('❌ 当前浏览器不支持 Service Worker');
+	}
 	// 获取最近观看
 	try {
 		// 打开数据库
@@ -200,73 +270,5 @@ Promise.all([
 			db.close();
 			console.debug("数据库已关闭");
 		}
-	}
-	// 开始 Service Worker
-	if ('serviceWorker' in navigator) {
-		try {
-			// 监听SW发送的消息
-			navigator.serviceWorker.addEventListener('message', (event) => {
-				if (!event.data) return;
-				// 缓存更新完成通知
-				if (event.data.type === 'CACHE_UPDATED') console.log('✨ PWA缓存已更新为版本:', event.data
-					.version);
-				// 缓存状态提示（命中/离线）
-				if (event.data.type === 'CACHE_STATUS') {
-					const {
-						status,
-						version
-					} = event.data, el = document.getElementById('Status');
-					if (!el) return;
-					const [message, color] = status === 'HIT' ? ['使用缓存加载', '#4caf50'] : 'MISS' ? [
-						'正在缓存资源', '#60b5ff'
-					] : ['离线模式', '#ff9800'];
-					el.style.backgroundColor = color;
-					el.textContent = message;
-					console.log(message + '，当前数据版本:' + version);
-					el.style.display = 'block';
-					setTimeout(() => el.style.display = 'none', 5000);
-				}
-			});
-			// 新SW激活后自动刷新页面
-			navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
-			// 版本更新提示函数
-			const showUpdatePrompt = (worker) => {
-				alert('🟢 检测到云端数据差异：\n🎉 有新版数据可用，程序即将自动重启！');
-				try {
-					worker.postMessage('SKIP_WAITING');
-				} catch (err) {
-					console.error('❌ 发送更新消息失败:', err);
-					window.location.reload();
-				}
-			};
-			// 注册Service Worker
-			const registration = await navigator.serviceWorker.register('./sw.js', {
-				updateViaCache: 'none'
-			});
-			console.log('✅ Service Worker 注册成功:', registration.scope);
-			// 处理已存在的待激活版本
-			if (registration.waiting) {
-				console.log('🎉 已有新版本等待激活！');
-				showUpdatePrompt(registration.waiting);
-			}
-			// 监听新版本发现
-			registration.addEventListener('updatefound', () => {
-				const newWorker = registration.installing;
-				console.log('🔄 发现新版本！');
-				newWorker.addEventListener('statechange', () => {
-					if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-						console.log('🎉 新版本已准备好！');
-						showUpdatePrompt(newWorker);
-					}
-				}, {
-					once: true
-				});
-			});
-			return registration;
-		} catch (error) {
-			console.log('❌ Service Worker 注册失败:', error);
-		}
-	} else {
-		console.log('❌ 当前浏览器不支持 Service Worker');
 	}
 })();

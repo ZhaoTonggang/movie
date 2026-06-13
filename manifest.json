@@ -9,6 +9,11 @@
 	"orientation": "any",
 	"scope": "./",
 	"icons": [{
+		"src": "./images/icons/a16.png",
+		"sizes": "16x16",
+		"type": "image/png",
+		"purpose": "any"
+	}, {
 		"src": "./images/icons/a48.png",
 		"sizes": "48x48",
 		"type": "image/png",
@@ -24,6 +29,11 @@
 		"type": "image/png",
 		"purpose": "any"
 	}, {
+		"src": "./images/icons/a128.png",
+		"sizes": "128x128",
+		"type": "image/png",
+		"purpose": "any"
+	}, {
 		"src": "./images/icons/a144.png",
 		"sizes": "144x144",
 		"type": "image/png",
@@ -31,6 +41,11 @@
 	}, {
 		"src": "./images/icons/a192.png",
 		"sizes": "192x192",
+		"type": "image/png",
+		"purpose": "any"
+	}, {
+		"src": "./images/icons/a384.png",
+		"sizes": "384x384",
 		"type": "image/png",
 		"purpose": "any"
 	}, {
@@ -98,29 +113,29 @@
 		"label": "风影阁",
 		"platform": "网页(WEB)"
 	}, {
-		"src": "./images/screenshots/1.png",
-		"sizes": "2564x1444",
+		"src": "./images/screenshots/m1.png",
+		"sizes": "430x932",
 		"type": "image/png",
 		"form_factor": "narrow",
 		"label": "风影阁",
 		"platform": "网页(WEB)"
 	}, {
-		"src": "./images/screenshots/2.png",
-		"sizes": "2564x1444",
+		"src": "./images/screenshots/m2.png",
+		"sizes": "430x932",
 		"type": "image/png",
 		"form_factor": "narrow",
 		"label": "风影阁",
 		"platform": "网页(WEB)"
 	}, {
-		"src": "./images/screenshots/3.png",
-		"sizes": "2564x1444",
+		"src": "./images/screenshots/m3.png",
+		"sizes": "430x932",
 		"type": "image/png",
 		"form_factor": "narrow",
 		"label": "风影阁",
 		"platform": "网页(WEB)"
 	}, {
-		"src": "./images/screenshots/4.png",
-		"sizes": "2564x1444",
+		"src": "./images/screenshots/m4.png",
+		"sizes": "430x932",
 		"type": "image/png",
 		"form_factor": "narrow",
 		"label": "风影阁",

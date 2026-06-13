@@ -1,63 +1,76 @@
 'use strict';
 // 版本
-const Ver = 1781043665,
-	cName = 'PWA-';
+const Ver = 1781043500,
+	cName = 'PWA-',
+	postMess = (type, status) => {
+		setTimeout(async () => {
+			const clients = await self.clients.matchAll({
+				includeUncontrolled: true,
+				type: 'window'
+			});
+			clients.forEach(c => c.postMessage({
+				type,
+				status,
+				version: Ver
+			}));
+		}, 1000);
+	};
 // 安装：缓存资源 + 立即激活
 self.addEventListener('install', e => {
 	e.waitUntil((async () => {
 		try {
 			// 打开缓存并缓存所有资源
 			await (await caches.open(cName + Ver)).addAll([
-			'./',
-			'./404.html',
-			'./ads/index.html',
-			'./css/index.css',
-			'./css/jiexi.css',
-			'./css/list.css',
-			'./css/play.css',
-			'./css/search.css',
-			'./css/style.css',
-			'./images/arrow-top.png',
-			'./images/cd-top.png',
-			'./images/cdtop.png',
-			'./images/icons/1024.png',
-			'./images/icons/144.png',
-			'./images/icons/180.png',
-			'./images/icons/192.png',
-			'./images/icons/512.png',
-			'./images/icons/72.png',
-			'./images/icons/a128.png',
-			'./images/icons/a144.png',
-			'./images/icons/a152.png',
-			'./images/icons/a16.png',
-			'./images/icons/a192.png',
-			'./images/icons/a384.png',
-			'./images/icons/a48.png',
-			'./images/icons/a512.png',
-			'./images/icons/a72.png',
-			'./images/icons/a96.png',
-			'./images/loding.gif',
-			'./images/logo.png',
-			'./images/more_1.png',
-			'./images/more_2.png',
-			'./images/more.png',
-			'./images/new.gif',
-			'./images/search.png',
-			'./images/tip_close.png',
-			'./index.html',
-			'./jiexi/index.html',
-			'./js/fetch.js',
-			'./js/index.js',
-			'./js/initdb.js',
-			'./js/jiexi.js',
-			'./js/list.js',
-			'./js/play.js',
-			'./js/search.js',
-			'./list/index.html',
-			'./manifest.json',
-			'./play/index.html',
-			'./search/index.html'
-		]);
+				'./',
+				'./404.html',
+				'./ads/index.html',
+				'./css/index.css',
+				'./css/jiexi.css',
+				'./css/list.css',
+				'./css/play.css',
+				'./css/search.css',
+				'./css/style.css',
+				'./images/arrow-top.png',
+				'./images/cd-top.png',
+				'./images/cdtop.png',
+				'./images/icons/1024.png',
+				'./images/icons/144.png',
+				'./images/icons/180.png',
+				'./images/icons/192.png',
+				'./images/icons/512.png',
+				'./images/icons/72.png',
+				'./images/icons/a128.png',
+				'./images/icons/a144.png',
+				'./images/icons/a152.png',
+				'./images/icons/a16.png',
+				'./images/icons/a192.png',
+				'./images/icons/a384.png',
+				'./images/icons/a48.png',
+				'./images/icons/a512.png',
+				'./images/icons/a72.png',
+				'./images/icons/a96.png',
+				'./images/loding.gif',
+				'./images/logo.png',
+				'./images/more_1.png',
+				'./images/more_2.png',
+				'./images/more.png',
+				'./images/new.gif',
+				'./images/search.png',
+				'./images/tip_close.png',
+				'./index.html',
+				'./jiexi/index.html',
+				'./js/fetch.js',
+				'./js/index.js',
+				'./js/initdb.js',
+				'./js/jiexi.js',
+				'./js/list.js',
+				'./js/play.js',
+				'./js/search.js',
+				'./list/index.html',
+				'./manifest.json',
+				'./play/index.html',
+				'./search/index.html'
+			]);
 			// 跳过等待，直接激活新SW
 			await self.skipWaiting();
 		} catch (error) {
@@ -72,8 +85,8 @@ self.addEventListener('activate', e => {
 	e.waitUntil((async () => {
 		try {
 			// 删除非当前版本的缓存
-			await Promise.all((await caches.keys()).filter(n => n.startsWith(cName)).map(n =>
-				caches.delete(n)));
+			await Promise.all((await caches.keys()).filter(n => n.startsWith(cName) && n !==
+				cName + Ver).map(n => caches.delete(n)));
 			// 立即控制所有页面
 			await self.clients.claim();
 			// 向页面发送缓存更新消息
@@ -92,26 +105,20 @@ self.addEventListener('activate', e => {
 	})());
 });
 // 接收页面消息：触发SKIP_WAITING更新
-self.addEventListener('message', e => e.data === 'SKIP_WAITING' && self.skipWaiting());
+self.addEventListener('message', e => e.data === 'SKIP_WAITING' && e.waitUntil(self.skipWaiting()));
 // 拦截请求：缓存优先 + 离线支持 + 状态通知
 self.addEventListener('fetch', e => {
 	const req = e.request;
 	// 只处理 GET 请求且只处理 HTTP/HTTPS 协议
-	if (req.method !== 'GET' || !req.url.startsWith('http')) return;
+	if (req.headers.has('Range') || req.method !== 'GET' || !req.url.startsWith('http')) return;
 	// 判断是否为HTML页面请求
 	const accept = req.headers.get('accept'),
 		isHTML = req.destination === 'document' || (accept && accept.includes('text/html')),
-		postMess = async (t, s) => {
-			setTimeout(async () => {
-				(await self.clients.matchAll({
-					includeUncontrolled: 1,
-					type: 'window'
-				})).forEach(c => c.postMessage({
-					type: t,
-					status: s,
-					version: Ver
-				}));
-			}, 1000)
+		resData = {
+			status: 503,
+			headers: {
+				'Content-Type': 'text/plain; charset=utf-8'
+			}
 		};
 	e.respondWith((async () => {
 		try {
@@ -124,7 +131,7 @@ self.addEventListener('fetch', e => {
 				if (isHTML) await postMess('CACHE_STATUS', 'HIT');
 				return cacheRes;
 			}
-			// HTML请求：延迟发送缓存命中消息
+			// HTML请求：延迟发送缓存未命中消息
 			if (isHTML) await postMess('CACHE_STATUS', 'MISS');
 			// 缓存未命中，请求网络
 			const networkRes = await fetch(req);
@@ -140,19 +147,11 @@ self.addEventListener('fetch', e => {
 				// 发送离线状态消息
 				await postMess('CACHE_STATUS', 'OFFLINE');
 				// 返回离线页面
-				return await caches.match('./index.html') ?? new Response(
-					'离线模式：无法加载页面', {
-						status: 503,
-						headers: {
-							'Content-Type': 'text/plain; charset=utf-8'
-						}
-					}
-				);
+				return await caches.match('./index.html') ?? new Response('离线模式：无法加载页面',
+					resData);
 			}
 			// 非HTML请求返回网络错误
-			return new Response('Network error', {
-				status: 503
-			});
+			return new Response('网络错误', resData);
 		}
 	})());
 });
